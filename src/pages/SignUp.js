@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Footer from "../components/shared/Footer";
 
 const SignUp = () => {
   return (
@@ -150,6 +151,7 @@ const SignUp = () => {
           </form>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

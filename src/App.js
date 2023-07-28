@@ -6,6 +6,8 @@ import SignUp from "./pages/SignUp";
 import ForgotPass from "./pages/ForgotPass";
 import AboutUs from "./pages/AboutUs";
 import Download from "./pages/Download";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TnC from "./pages/TnC";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route exact path="/ForgotPass" element = {<ForgotPass/>}/>
           <Route exact path="/AboutUs" element = {<AboutUs/>}/>
           <Route exact path="/Download" element = {<Download/>}/>
+          <Route exact path="/PrivacyPolicy" element = {<PrivacyPolicy/>}/>
+          <Route exact path="/TnC" element = {<TnC/>}/>
         </Routes>
       </Router>
     </>

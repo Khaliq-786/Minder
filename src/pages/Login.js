@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Footer from "../components/shared/Footer";
 
 const Login = () => {
   return (
@@ -90,6 +91,7 @@ const Login = () => {
           </form>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
