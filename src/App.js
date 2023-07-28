@@ -4,6 +4,8 @@ import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ForgotPass from "./pages/ForgotPass";
+import AboutUs from "./pages/AboutUs";
+import Download from "./pages/Download";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route exact path="/Login" element = {<Login/>}/>
           <Route exact path="/SignUp" element = {<SignUp/>}/>
           <Route exact path="/ForgotPass" element = {<ForgotPass/>}/>
+          <Route exact path="/AboutUs" element = {<AboutUs/>}/>
+          <Route exact path="/Download" element = {<Download/>}/>
         </Routes>
       </Router>
     </>
