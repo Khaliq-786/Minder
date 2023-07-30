@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/shared/Footer";
+import Navbar from "../components/shared/Navbar";
 
 const Login = () => {
   return (
     <>
+    <Navbar/>
       <div className="h-screen flex justify-center bg-gradient-to-br from-red-200 via-red-300 to-yellow-200">
         <div className=" border-4 border-pink-900 rounded-lg border-double shadow-md mt-12 flex justify-center items-center h-5/6 w-3/6">
           <form className="w-3/6 flex flex-col">

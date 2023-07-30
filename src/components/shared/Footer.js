@@ -8,33 +8,33 @@ const Footer = () => {
   }
   return (
     <>
-      <footer class="w-full bg-black text-white shadow dark:bg-gray-800">
-        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-          <span class="text-sm text-gray-500 sm:text-center">
+      <footer className="w-full bg-black text-white shadow dark:bg-gray-800">
+        <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+          <span className="text-sm text-gray-500 sm:text-center">
             © 2023{" "}
-            <Link to="/" onClick={refreshPage} class="hover:underline">
+            <Link to="/" onClick={refreshPage} className="hover:underline">
               MINDER™
             </Link>
             . All Rights Reserved.
           </span>
-          <ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
+          <ul className="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
             <li>
-              <Link to="/AboutUs" class="mr-4 hover:underline md:mr-6 ">
+              <Link to="/AboutUs" className="mr-4 hover:underline md:mr-6 ">
                 About Us
               </Link>
             </li>
             <li>
-              <Link to="/PrivacyPolicy" class="mr-4 hover:underline md:mr-6">
+              <Link to="/PrivacyPolicy" className="mr-4 hover:underline md:mr-6">
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link to="/TnC" class="mr-4 hover:underline md:mr-6">
+              <Link to="/TnC" className="mr-4 hover:underline md:mr-6">
                 Terms and Conditions
               </Link>
             </li>
             <li>
-              <Link to="/Download" class="hover:underline">
+              <Link to="/Download" className="hover:underline">
                 Download
               </Link>
             </li>

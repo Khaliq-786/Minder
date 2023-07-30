@@ -8,6 +8,7 @@ import AboutUs from "./pages/AboutUs";
 import Download from "./pages/Download";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TnC from "./pages/TnC";
+import CreateProfile from "./pages/CreateProfile";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/Download" element = {<Download/>}/>
           <Route exact path="/PrivacyPolicy" element = {<PrivacyPolicy/>}/>
           <Route exact path="/TnC" element = {<TnC/>}/>
+          <Route exact path="/CreateProfile" element = {<CreateProfile/>}/>
         </Routes>
       </Router>
     </>
