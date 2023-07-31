@@ -9,6 +9,7 @@ import Download from "./pages/Download";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TnC from "./pages/TnC";
 import CreateProfile from "./pages/CreateProfile";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/PrivacyPolicy" element = {<PrivacyPolicy/>}/>
           <Route exact path="/TnC" element = {<TnC/>}/>
           <Route exact path="/CreateProfile" element = {<CreateProfile/>}/>
+          <Route exact path="/Home" element = {<Home/>}/>
         </Routes>
       </Router>
     </>
