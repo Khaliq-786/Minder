@@ -17,6 +17,54 @@ const CreateProfile = () => {
             <div className="text-5xl tex justify-center items-center align-middle mb-10 mx-auto font-semibold text-gray-950">
               Create your Profile
             </div>
+
+            <div className="mb-6">
+              <label
+                htmlFor="username"
+                className="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Username
+              </label>
+              <input
+                type="username"
+                id="username"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Select username"
+                required
+              />
+            </div>
+
+            <div className="flex flex- mx-auto w-full">
+              <div className="mb-6 w-full mr-2">
+                <label
+                  htmlFor="name"
+                  className="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  First Name
+                </label>
+                <input
+                  type="name"
+                  id="fname"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Enter First name"
+                  required
+                />
+              </div>
+              <div className="mb-6 w-full ml-1">
+                <label
+                  htmlFor="name"
+                  className="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Last Name
+                </label>
+                <input
+                  type="name"
+                  id="lname"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Enter Last name"
+                />
+              </div>
+            </div>
             <div className="w-full mb-6">
               <label
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -195,13 +243,27 @@ const CreateProfile = () => {
               >
                 Your Bio
               </label>
-              <textarea name="bio" id="bio" cols="30" rows="10" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your Bio defines you !"></textarea>
+              <textarea
+                name="bio"
+                id="bio"
+                cols="30"
+                rows="10"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Your Bio defines you !"
+              ></textarea>
             </div>
             <div className="mb-6">
-              <label htmlFor="date_of_birth" className="mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label
+                htmlFor="date_of_birth"
+                className="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
                 Date of birth
               </label>
-              <input type="date" id="date_of_birth" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+              <input
+                type="date"
+                id="date_of_birth"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
             </div>
             <button className="flex justify-center items-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
               <span className="w-full flex justify-center items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">

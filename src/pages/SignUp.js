@@ -6,58 +6,12 @@ import Navbar from "../components/shared/Navbar";
 const SignUp = () => {
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className="flex justify-center bg-gradient-to-br from-red-200 via-red-300 to-yellow-200">
         <div className="p-5 mb-8 border-4 border-pink-900 rounded-lg border-double shadow-md mt-12 flex justify-center items-center h-5/6 w-9/12">
           <form className="w-3/6 flex flex-col required:border-red-500 ">
             <div className="text-5xl tex justify-center items-center align-middle mb-10 mx-auto font-semibold text-gray-950">
               SignUp
-            </div>
-            <div className="flex flex- mx-auto w-full">
-              <div className="mb-6 w-full mr-2">
-                <label
-                  htmlFor="name"
-                  className="mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  First Name
-                </label>
-                <input
-                  type="name"
-                  id="fname"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Enter First name"
-                  required
-                />
-              </div>
-              <div className="mb-6 w-full ml-1">
-                <label
-                  htmlFor="name"
-                  className="mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Last Name
-                </label>
-                <input
-                  type="name"
-                  id="lname"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Enter Last name"
-                />
-              </div>
-            </div>
-            <div className="mb-6">
-              <label
-                htmlFor="username"
-                className="mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Username
-              </label>
-              <input
-                type="username"
-                id="username"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Select username"
-                required
-              />
             </div>
             <div className="mb-6">
               <label
@@ -153,7 +107,7 @@ const SignUp = () => {
           </form>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };
