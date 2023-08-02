@@ -27,8 +27,8 @@ const SignUp = () => {
     e.preventDefault();
     let pw1 = document.getElementById("password");  
     let pw2 = document.getElementById("confirmpassword");  
-    if(pw1.value != pw2.value) 
-    {
+    if(pw1.value !== pw2.value) 
+    { 
       //Checking for password and confirm password are same or not
       errormessage("Password and Confirm Password must be same !");
       return;
