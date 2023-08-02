@@ -25,10 +25,9 @@ const SignUp = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let pw1 = document.getElementById("password");  
-    let pw2 = document.getElementById("confirmpassword");  
-    if(pw1.value != pw2.value) 
-    {
+    let pw1 = document.getElementById("password");
+    let pw2 = document.getElementById("confirmpassword");
+    if (pw1.value !== pw2.value) {
       //Checking for password and confirm password are same or not
       errormessage("Password and Confirm Password must be same !");
       return;
@@ -58,9 +57,9 @@ const SignUp = () => {
     <>
       <Navbar />
       <div className="flex justify-center bg-gradient-to-br from-red-200 via-red-300 to-yellow-200">
-        <div className="p-5 mb-8 border-4 border-pink-900 rounded-lg border-double shadow-md mt-12 flex justify-center items-center h-5/6 w-9/12">
+        <div className="p-5 mb-8 rounded-lg mt-28 flex justify-center items-center h-5/6 w-9/12">
           <form
-            className="w-3/6 flex flex-col required:border-red-500 "
+            className="w-3/6 flex flex-col required:border-red-500"
             onSubmit={handleSubmit}
           >
             <div className="text-5xl tex justify-center items-center align-middle mb-10 mx-auto font-semibold text-gray-950">
@@ -149,6 +148,7 @@ const SignUp = () => {
                 <li>Password must have atleast 1 uppercase letter</li>
                 <li>Password must have atleast 1 lowercase letter</li>
                 <li>Password must have atleast 1 number</li>
+                <li>Password must have atleast 1 special character</li>
               </ul>
             </div>
             <div
