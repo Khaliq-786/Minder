@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../../Logo.png";
 import { Link } from "react-router-dom";
 import {
   SearchIcon,
@@ -23,17 +22,19 @@ const Navbar = () => {
           <div className="relative hidden lg:inline-grid w-24 cursor-pointer mt-1 p-3">
             <img
               src="https://links.papareact.com/ocw"
+              alt="Site logo"
               layout="fill"
-              objectFit="contain"
+              objectfit="contain"
             />
           </div>
 
           <div className="relative w-10 lg:hidden flex-shrink-0 cursor-pointer mt-1 p-3">
             <img
               src="../Logo.png "
+              alt="Site logo"
               className="h-10 rounded-full cursor-pointer"
               layout="fill"
-              objectFit="contain"
+              objectfit="contain"
             />
           </div>
 
@@ -41,7 +42,7 @@ const Navbar = () => {
           <div className="max-w-xs">
             <div className="relative mt-1 p-3 rounded-md">
               <div className="absolute inset-y-0 pl-3 flex items-center pointer-events-none">
-                <SearchIcon className="h-5 w-5" text-gray-500 />
+                <SearchIcon className="h-5 w-5 text-gray-500"/>
               </div>
               <input
                 className="bg-gray-50 block w-full pl-10 sm:text-sm
@@ -61,6 +62,7 @@ const Navbar = () => {
 
             <img
               src="https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2012/10/image1.jpg?w=500&ssl=1"
+              alt="Carousel image"
               className="h-10 rounded-full cursor-pointer"
             />
           </div>

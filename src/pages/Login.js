@@ -2,14 +2,49 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/shared/Footer";
 import Navbar from "../components/shared/Navbar";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  let navigate = useNavigate();
+  function wrongpassalert() {
+    let dropdown = document.getElementById("wrongcreds");
+    dropdown.classList.toggle("hidden");
+  }
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const onChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: credentials.email,
+        password: credentials.password,
+      }),
+    });
+
+    const json = await response.json();
+    if (json.success) {
+      //Save the auth token and redirect
+      localStorage.setItem("token", json.authtoken);
+      navigate("/Home");
+    } else {
+      wrongpassalert();
+    }
+    console.log(json);
+  };
+
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className="h-screen flex justify-center bg-gradient-to-br from-red-200 via-red-300 to-yellow-200">
         <div className=" border-4 border-pink-900 rounded-lg border-double shadow-md mt-12 flex justify-center items-center h-5/6 w-3/6">
-          <form className="w-3/6 flex flex-col">
+          <form className="w-3/6 flex flex-col" onSubmit={handleSubmit}>
             <div className="text-5xl tex justify-center items-center align-middle mb-10 mx-auto font-semibold text-gray-950">
               Sign In
             </div>
@@ -22,9 +57,12 @@ const Login = () => {
               </label>
               <input
                 type="email"
+                name="email"
                 id="email"
+                value={credentials.email}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Enter Email"
+                onChange={onChange}
                 required
               />
             </div>
@@ -38,7 +76,10 @@ const Login = () => {
               <input
                 type="password"
                 id="password"
+                name="password"
+                value={credentials.password}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={onChange}
                 required
               />
             </div>
@@ -58,6 +99,12 @@ const Login = () => {
               >
                 Remember me
               </label>
+            </div>
+            <div
+              className="text-sm text-center font-bold text-red-950 pb-3 hidden"
+              id="wrongcreds"
+            >
+              Log in using correct email and password !
             </div>
             <button className="flex justify-center items-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
               <span className="w-full flex justify-center items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
@@ -88,12 +135,14 @@ const Login = () => {
             </button>
             <div className="text-black font-bold m-auto">
               New to Minder ?
-              <Link className="ml-4" to="/Signup">SignUp</Link>
+              <Link className="ml-4" to="/Signup">
+                SignUp
+              </Link>
             </div>
           </form>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

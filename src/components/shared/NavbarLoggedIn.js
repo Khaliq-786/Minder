@@ -28,7 +28,7 @@ const NavbarLoggedIn = () => {
             <img
               src="https://links.papareact.com/ocw"
               layout="fill"
-              objectFit="contain"
+              objectfit="contain"
             />
           </div>
 
@@ -36,7 +36,7 @@ const NavbarLoggedIn = () => {
             <img
               src="../Logo.png " className="h-10 rounded-full cursor-pointer"
               layout="fill"
-              objectFit="contain"
+              objectfit="contain"
             />
           </div>
 
