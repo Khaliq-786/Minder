@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   SearchIcon,
@@ -9,60 +9,143 @@ import {
   MenuIcon,
 } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
+import { BackspaceIcon } from "react-icons/bi";
+import { AiOutlineClose } from "react-icons/ai";
+import { HiOutlineMenuAlt4 } from "react-icons/hi";
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaPinterest,
+  FaYoutube,
+} from "react-icons/fa";
+import { BsPerson } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  let navigate = useNavigate();
   function refreshPage() {
     let location = window.location.pathname;
     if (location === "/") window.location.reload(false);
   }
+
+  const [nav, setNav] = useState(false);
+  const handleNav = () => {
+    setNav(!nav);
+  };
   return (
     <>
-      <div className="shadow-sm  sticky top-0 z-50 bg-white">
-        <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
+      <div className="flex w-full justify-between items-center h-20 px-4 absolute right-4 z-10">
+        <Link to="/" onClick={refreshPage}>
+          <div>
+            <h1 className="text-3xl lg:text-4xl pl-5 lg:pl-3 font-semibold cursor-pointer">
+              Minder
+            </h1>
+          </div>
+        </Link>
+        <ul className="hidden lg:font-semibold lg:flex">
           <Link to="/" onClick={refreshPage}>
-            <div className="relative hidden lg:inline-grid w-24 cursor-pointer mt-1 p-3">
-              <h1 className="">MINDER</h1>
-            </div>
+            <li className="p-4 text-xl cursor-pointer">Home</li>
           </Link>
+          <Link to="/AboutUs">
+            <li className="p-4 text-xl cursor-pointer">About Us</li>
+          </Link>
+          <li className="p-4 text-xl cursor-pointer">Reviews</li>
+          <Link to="/PrivacyPolicy">
+            <li className="p-4 text-xl cursor-pointer"> Privacy Policy</li>
+          </Link>
+          <Link to="/Download">
+            <li className="p-4 text-xl cursor-pointer">Downloads</li>
+          </Link>
+        </ul>
 
-          <div className="relative w-10 lg:hidden flex-shrink-0 cursor-pointer mt-1 p-3">
-            <img
-              src="../love.png "
-              alt="Site logo"
-              className="h-10 w-10 rounded-full cursor-pointer"
-              layout="fill"
-              objectfit="contain"
-            />
-          </div>
+        <button
+          onClick={() => {
+            navigate("/Login");
+          }}
+          className="hidden absolute mt-2 right-32 lg:inline-flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
+        >
+          <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+            Log In
+          </span>
+        </button>
+        <button
+          onClick={() => {
+            navigate("/Signup");
+          }}
+          className="hidden absolute right-4 mt-2 lg:inline-flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
+        >
+          <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+            Sign Up
+          </span>
+        </button>
+        <div className="hidden mr-4 lg:flex">
+          {/* <BsPerson size={20} /> */}
+        </div>
+        <div onClick={handleNav} className="lg:hidden z-10">
+          {nav ? <AiOutlineClose size={20} /> : <HiOutlineMenuAlt4 size={20} />}
+        </div>
 
-          {/* {Middle} */}
-          <div className="max-w-xs">
-            <div className="relative mt-1 p-3 rounded-md">
-              <div className="absolute inset-y-0 pl-3 flex items-center pointer-events-none">
-                <SearchIcon className="h-5 w-5 text-gray-500" />
-              </div>
-              <input
-                className="bg-gray-50 block w-full pl-10 sm:text-sm
-          border-gray-300 focus:ring-black focus:border-black rounded-md"
-                type="text"
-                placeholder="Search"
-              />
+        {/* Mobile menu */}
+        <div
+          onClick={handleNav}
+          className={
+            nav
+              ? "absolute left-0 top-0 w-full bg-gray-100/90 px-4 py-7 flex flex-col"
+              : "absolute left-[-100%]"
+          }
+        >
+          <ul className="">
+            <Link to="/" onClick={refreshPage}>
+              <li className="border-b p-4 text-xl cursor-pointer">Minder</li>
+            </Link>
+            <Link to="/" onClick={refreshPage}>
+              <li className="border-b p-4 text-xl cursor-pointer">Home</li>
+            </Link>
+            <Link to="/Aboutus">
+              <li className="border-b p-4 text-xl cursor-pointer">About Us</li>
+            </Link>
+            <li className="border-b p-4 text-xl cursor-pointer">Reviews</li>
+            <Link to="/PrivacyPolicy">
+              <li className="border-b p-4 text-xl cursor-pointer">
+                {" "}
+                Privacy Policy
+              </li>
+            </Link>
+            <Link to="/Download">
+              <li className="border-b p-4 text-xl cursor-pointer">Downloads</li>
+            </Link>
+            <div className="m-4 ">
+              <button
+                onClick={() => {
+                  navigate("/Login");
+                }}
+                className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
+              >
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                  Log In
+                </span>
+              </button>
+
+              <button
+                onClick={() => {
+                  navigate("/Signup");
+                }}
+                className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
+              >
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                  Sign Up
+                </span>
+              </button>
             </div>
-          </div>
-
-          {/* {Right} */}
-          <div className="flex place-items-center justify-end space-x-4">
-            <Link to="/Login">
-            <button className="btn  border-primary border-2 border-black">
-              Log In
-            </button>
-            </Link>
-            <Link to="/SignUp">
-            <button className="btn  border-primary border-2 border-black">
-              Sign Up
-            </button>
-            </Link>
-          </div>
+            <div className="flex justify-between my-6">
+              <FaFacebook className="text-2xl cursor-pointer" />
+              <FaTwitter className="text-2xl cursor-pointer" />
+              <FaInstagram className="text-2xl cursor-pointer" />
+              <FaPinterest className="text-2xl cursor-pointer" />
+              <FaYoutube className="text-2xl cursor-pointer" />
+            </div>
+          </ul>
         </div>
       </div>
     </>
@@ -70,41 +153,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-{
-  /* <div className="max-w-screen flex flex-wrap items-center justify-between mx-auto p-4 bg-gradient-to-br from-slate-700 via-slate-400 to-slate-100 text-black primary-text">
-    <Link to="/" onClick={refreshPage}>
-      <img
-        src={logo}
-        className="inline-block relative h-16 mr-2 rounded-lg"
-        alt="Minder Logo"
-      />
-      <div className="inline-block font-body font-bold secondary-text">
-        MINDER
-      </div>
-    </Link>
-    <ul className="ml-10 text-lg font-medium flex flex-col p-4 md:p-0 mt-4 border rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
-      <li className="hover:cursor-pointer">
-        <Link to="/" onClick={refreshPage}>
-          Home
-        </Link>
-      </li>
-      <li className="hover:cursor-pointer">
-        <Link to="/AboutUs">About us</Link>
-      </li>
-      <li className="hover:cursor-pointer">
-        <Link to="/Download">Download</Link>
-      </li>
-    </ul>
-    <button className="relative inline-flex items-center justify-center p-0.5 ml-auto mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
-      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-        <Link to="/Login">Login</Link>
-      </span>
-    </button>
-    <button className="relative inline-flex items-center justify-center p-0.5 mb-2 ml-2 mr-4 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
-      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-        <Link to="/SignUp">Sign Up</Link>
-      </span>
-    </button>
-  </div> */
-}
