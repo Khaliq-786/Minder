@@ -2,14 +2,67 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/shared/Footer";
 import Navbar from "../components/shared/Navbar";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  let navigate = useNavigate();
+
+  function errormessage(message) {
+    //Function to display error messages recieved from backend server
+    let dropdown = document.getElementById("errormessage");
+    dropdown.innerHTML = message;
+    dropdown.classList.toggle("hidden");
+  }
+
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+    confirmpassword: "",
+  });
+  const onChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let pw1 = document.getElementById("password");  
+    let pw2 = document.getElementById("confirmpassword");  
+    if(pw1.value != pw2.value) 
+    {
+      //Checking for password and confirm password are same or not
+      errormessage("Password and Confirm Password must be same !");
+      return;
+    }
+
+    const response = await fetch("http://localhost:5000/api/auth/createuser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: credentials.email,
+        password: credentials.password,
+      }),
+    });
+
+    const json = await response.json();
+    if (json.success) {
+      //Save the auth token and redirect
+      localStorage.setItem("token", json.authtoken);
+      navigate("/CreateProfile");
+    } else {
+      errormessage(json.error);
+    }
+  };
   return (
     <>
       <Navbar />
       <div className="flex justify-center bg-gradient-to-br from-red-200 via-red-300 to-yellow-200">
         <div className="p-5 mb-8 border-4 border-pink-900 rounded-lg border-double shadow-md mt-12 flex justify-center items-center h-5/6 w-9/12">
-          <form className="w-3/6 flex flex-col required:border-red-500 ">
+          <form
+            className="w-3/6 flex flex-col required:border-red-500 "
+            onSubmit={handleSubmit}
+          >
             <div className="text-5xl tex justify-center items-center align-middle mb-10 mx-auto font-semibold text-gray-950">
               SignUp
             </div>
@@ -22,9 +75,12 @@ const SignUp = () => {
               </label>
               <input
                 type="email"
+                name="email"
                 id="email"
+                value={credentials.email}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Enter Email"
+                onChange={onChange}
                 required
               />
             </div>
@@ -38,7 +94,12 @@ const SignUp = () => {
               <input
                 type="password"
                 id="password"
+                name="password"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                value={credentials.password}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={onChange}
+                minLength={8}
                 required
               />
             </div>
@@ -52,7 +113,12 @@ const SignUp = () => {
               <input
                 type="password"
                 id="confirmpassword"
+                name="confirmpassword"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                value={credentials.confirmpassword}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={onChange}
+                minLength={8}
                 required
               />
             </div>
@@ -74,6 +140,21 @@ const SignUp = () => {
                 of them.
               </label>
             </div>
+            <div
+              className="text-sm text-center font-light text-red-950 pb-3"
+              id="passwroddetails"
+            >
+              <ul className="inline-block list-disc">
+                <li>Password must be of minimum length 8</li>
+                <li>Password must have atleast 1 uppercase letter</li>
+                <li>Password must have atleast 1 lowercase letter</li>
+                <li>Password must have atleast 1 number</li>
+              </ul>
+            </div>
+            <div
+              className="text-sm text-center font-bold text-red-950 pb-3 hidden"
+              id="errormessage"
+            ></div>
             <button className="flex justify-center items-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
               <span className="w-full flex justify-center items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                 Signup

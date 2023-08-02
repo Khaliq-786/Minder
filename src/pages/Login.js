@@ -7,10 +7,15 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   let navigate = useNavigate();
-  function wrongpassalert() {
-    let dropdown = document.getElementById("wrongcreds");
+
+
+  function errormessage(message) {
+    let dropdown = document.getElementById("errormessage");
+    dropdown.innerHTML = message;
     dropdown.classList.toggle("hidden");
   }
+
+
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -31,12 +36,12 @@ const Login = () => {
     const json = await response.json();
     if (json.success) {
       //Save the auth token and redirect
+
       localStorage.setItem("token", json.authtoken);
       navigate("/Home");
     } else {
-      wrongpassalert();
+      errormessage(json.error);
     }
-    console.log(json);
   };
 
   return (
@@ -102,9 +107,8 @@ const Login = () => {
             </div>
             <div
               className="text-sm text-center font-bold text-red-950 pb-3 hidden"
-              id="wrongcreds"
+              id="errormessage"
             >
-              Log in using correct email and password !
             </div>
             <button className="flex justify-center items-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
               <span className="w-full flex justify-center items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
