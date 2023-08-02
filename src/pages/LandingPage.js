@@ -7,12 +7,10 @@ import Footer from "../components/shared/Footer";
 const LandingPage = () => {
   return (
     <>
-      <div className="h-full bg-gradient-to-br from-red-400 via-red-300 to-yellow-200">
         <Navbar />  
         <Carousel/>
         <Intro/>
         <Footer/>
-      </div>
     </>
   );
 };

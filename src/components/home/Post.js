@@ -1,5 +1,5 @@
 import React from "react";
-import dp from "../../images/dating1.jpg"
+import dp from "../../images/bgm.jpg"
 
 const Post = () => {
   return (

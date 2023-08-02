@@ -48,9 +48,9 @@ const Login = () => {
     <>
       <Navbar />
       <div className="h-screen flex justify-center bg-gradient-to-br from-red-200 via-red-300 to-yellow-200">
-        <div className=" border-4 border-pink-900 rounded-lg border-double shadow-md mt-12 flex justify-center items-center h-5/6 w-3/6">
+        <div className="rounded-lg mt-28 flex justify-center items-center h-5/6 w-3/6">
           <form className="w-3/6 flex flex-col" onSubmit={handleSubmit}>
-            <div className="text-5xl tex justify-center items-center align-middle mb-10 mx-auto font-semibold text-gray-950">
+            <div className="text-5xl justify-center items-center align-middle mb-10 mx-auto font-semibold text-gray-950">
               Sign In
             </div>
             <div className="mb-6">
