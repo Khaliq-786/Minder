@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../../Logo.png";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import profileContext from "../../context/profiles/profileContext";

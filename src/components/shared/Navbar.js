@@ -17,22 +17,20 @@ const Navbar = () => {
   }
   return (
     <>
-      <div className="shadow-sm border-b bg-white sticky top-0 z-50">
+      <div className="shadow-sm  sticky top-0 z-50 bg-white">
+        
+        
         <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
+          
           <div className="relative hidden lg:inline-grid w-24 cursor-pointer mt-1 p-3">
-            <img
-              src="https://links.papareact.com/ocw"
-              alt="Site logo"
-              layout="fill"
-              objectfit="contain"
-            />
+            <h1 className="">MINDER</h1>
           </div>
 
           <div className="relative w-10 lg:hidden flex-shrink-0 cursor-pointer mt-1 p-3">
             <img
-              src="../Logo.png "
+              src="../love.png "
               alt="Site logo"
-              className="h-10 rounded-full cursor-pointer"
+              className="h-10 w-10 rounded-full cursor-pointer"
               layout="fill"
               objectfit="contain"
             />
@@ -55,16 +53,8 @@ const Navbar = () => {
 
           {/* {Right} */}
           <div className="flex place-items-center justify-end space-x-4">
-            <HomeIcon className="navBtn" />
-            <MenuIcon className="h-6 md:hidden cursor-pointer" />
-            <PaperAirplaneIcon className="navBtn" />
-            <HeartIcon className="navBtn" />
-
-            <img
-              src="https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2012/10/image1.jpg?w=500&ssl=1"
-              alt="Carousel image"
-              className="h-10 rounded-full cursor-pointer"
-            />
+            <button className="btn  border-primary border-2 border-black">Log In</button>
+            <button className="btn  border-primary border-2 border-black">Sign Up</button>
           </div>
         </div>
       </div>
