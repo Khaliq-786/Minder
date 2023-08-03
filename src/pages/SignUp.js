@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   let navigate = useNavigate();
 
-  function errormessage(message) {
+  function errormessage(message = "Internal server error") {
     //Function to display error messages recieved from backend server
     let dropdown = document.getElementById("errormessage");
     dropdown.innerHTML = message;
