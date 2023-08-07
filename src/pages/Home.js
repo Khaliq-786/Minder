@@ -16,8 +16,8 @@ const Home = () => {
   return (
     <>
       <NavbarLoggedIn />
-      <div className="h-screen flex justify-center items-center">
-        <Feed />
+      <div className=" bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 h-screen flex justify-center items-center">
+        <Feed/>
       </div>
       <Footer />
     </>
