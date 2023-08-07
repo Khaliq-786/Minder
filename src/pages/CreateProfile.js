@@ -1,6 +1,6 @@
-import React from "react";
-import Navbar from "../components/shared/Navbar";
+import React, { useState } from "react";
 import Footer from "../components/shared/Footer";
+import NavbarLoggedIn from "../components/shared/NavbarLoggedIn";
 
 const CreateProfile = () => {
   function toggleDropdown() {
@@ -8,11 +8,23 @@ const CreateProfile = () => {
     dropdown.classList.toggle("hidden");
   }
 
-
+  const [credentials, setCredentials] = useState({
+    username: "",
+    first_name: "",
+    last_name: "",
+    gender: "",
+    dating_prefrence: "",
+    bio: "",
+    date_of_birth: "",
+    profileImg: "",
+  });
+  const onChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
 
   return (
     <>
-      <Navbar />
+      <NavbarLoggedIn />
       <div className="bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 min-h-screen flex items-center justify-center">
         <div className="p-5  mb-8 mt-24  rounded-lg border-dashed border-2 border-red-700    flex justify-center items-center h-5/6 w-9/12">
           <form className="w-3/6 flex flex-col  ">
@@ -31,6 +43,9 @@ const CreateProfile = () => {
                 className="bg-gray-50  text-gray-900 text-sm rounded-lg w-full p-2.5 border focus:ring-red-500 focus:border-red-500"
                 type="username"
                 id="username"
+                name="username"
+                value={credentials.username}
+                onChange={onChange}
                 placeholder="Select username"
                 required
               />
@@ -46,7 +61,10 @@ const CreateProfile = () => {
                 </label>
                 <input
                   type="name"
-                  id="fname"
+                  id="first_name"
+                  name="first_name"
+                  value={credentials.first_name}
+                  onChange={onChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Enter First name"
                   required
@@ -61,7 +79,10 @@ const CreateProfile = () => {
                 </label>
                 <input
                   type="name"
-                  id="lname"
+                  id="last_name"
+                  name="last_name"
+                  value={credentials.last_name}
+                  onChange={onChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Enter Last name"
                 />
@@ -77,7 +98,10 @@ const CreateProfile = () => {
               <input
                 className="block w-full py-2 px-1 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 h-full"
                 aria-describedby="user_avatar_help"
-                id="user_avatar"
+                id="profileImg"
+                name="profileImg"
+                value={credentials.profileImg}
+                onChange={onChange}
                 type="file"
               />
               <div
@@ -248,6 +272,8 @@ const CreateProfile = () => {
               <textarea
                 name="bio"
                 id="bio"
+                value={credentials.bio}
+                onChange={onChange}
                 cols="30"
                 rows="10"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -264,6 +290,9 @@ const CreateProfile = () => {
               <input
                 type="date"
                 id="date_of_birth"
+                name="date_of_birth"
+                value={credentials.date_of_birth}
+                onChange={onChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>

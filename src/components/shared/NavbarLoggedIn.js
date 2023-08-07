@@ -69,7 +69,7 @@ const NavbarLoggedIn = () => {
                 let dropdown = document.getElementById("dropdown");
                 dropdown.classList.toggle("hidden");
               }}
-              src="https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2012/10/image1.jpg?w=500&ssl=1"
+              src={profile.profileImg}
               className="h-10 rounded-full cursor-pointer navBtn"
               alt="Profile pic"
             />
