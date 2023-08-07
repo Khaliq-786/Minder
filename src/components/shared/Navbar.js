@@ -38,29 +38,29 @@ const Navbar = () => {
       <div className="flex w-full justify-between items-center h-20 px-4 absolute right-7 z-10">
         <Link to="/" onClick={refreshPage}>
           <div>
-            <h1 className="text-3xl lg:text-4xl ml-8 pl-5 lg:pl-3 font-semibold cursor-pointer font-fornavbar text-red-700">
+            <h1 className="text-3xl font-bold lg:text-4xl ml-8 pl-5 lg:pl-3  cursor-pointer font-fornavbar text-red-700">
               Minder 💋
             </h1>
           </div>
         </Link>
-        <ul className="hidden lg:font-semibold lg:flex">
+        <ul className="hidden lg:font-fornavbarmiddle lg:flex">
           <Link to="/" onClick={refreshPage}>
-            <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">Home</li>
+            <li className="p-4 text-3xl cursor-pointer text-red-700 font-bold">Home</li>
           </Link>
           <Link to="/AboutUs">
-            <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">
+            <li className="p-4 text-3xl cursor-pointer text-red-700  font-bold">
               About Us
             </li>
           </Link>
-          <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">Reviews</li>
+          <li className="p-4 text-3xl cursor-pointer text-red-700  font-bold">Reviews</li>
           <Link to="/PrivacyPolicy">
-            <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">
+            <li className="p-4 text-3xl cursor-pointer text-red-700  font-bold">
               {" "}
               Privacy Policy
             </li>
           </Link>
           <Link to="/Download">
-            <li className="p-4 text-xl cursor-pointer  text-red-700 font-bold ">
+            <li className="p-4 text-3xl cursor-pointer  text-red-700  font-bold ">
               Downloads
             </li>
           </Link>

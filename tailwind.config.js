@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         fornavbar: ['Sacramento', 'cursive'],
+        fornavbarmiddle: ['Agdasima','sans-serif'],
         body: ['Dancing Script']
       }
     },

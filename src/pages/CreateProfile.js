@@ -8,27 +8,29 @@ const CreateProfile = () => {
     dropdown.classList.toggle("hidden");
   }
 
+
+
   return (
     <>
       <Navbar />
-      <div className="flex justify-center bg-gradient-to-br from-red-200 via-red-300 to-yellow-200">
-        <div className="p-5 mb-8 border-4 border-pink-900 rounded-lg border-double shadow-md mt-12 flex justify-center items-center h-5/6 w-9/12">
-          <form className="w-3/6 flex flex-col required:border-red-500 ">
-            <div className="text-5xl tex justify-center items-center align-middle mb-10 mx-auto font-semibold text-gray-950">
-              Create your Profile
+      <div className="bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 min-h-screen flex items-center justify-center">
+        <div className="p-5  mb-8 mt-24  rounded-lg border-dashed border-2 border-red-700    flex justify-center items-center h-5/6 w-9/12">
+          <form className="w-3/6 flex flex-col  ">
+            <div className="text-5xl tex justify-center items-center align-middle mt-4 mb-6 mx-auto font-light text-rose-700 font-fornavbar">
+              Tell us about yourself 💞 !!
             </div>
 
-            <div className="mb-6">
+            <div className="mb-6 ">
               <label
                 htmlFor="username"
-                className="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="mb-2 text-sm font-medium text-rose-700 dark:text-white"
               >
                 Username
               </label>
               <input
+                className="bg-gray-50  text-gray-900 text-sm rounded-lg w-full p-2.5 border focus:ring-red-500 focus:border-red-500"
                 type="username"
                 id="username"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Select username"
                 required
               />
@@ -38,7 +40,7 @@ const CreateProfile = () => {
               <div className="mb-6 w-full mr-2">
                 <label
                   htmlFor="name"
-                  className="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="mb-2 text-sm font-medium text-rose-700 dark:text-white"
                 >
                   First Name
                 </label>
@@ -53,7 +55,7 @@ const CreateProfile = () => {
               <div className="mb-6 w-full ml-1">
                 <label
                   htmlFor="name"
-                  className="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="mb-2 text-sm font-medium text-rose-700 dark:text-white"
                 >
                   Last Name
                 </label>
@@ -67,7 +69,7 @@ const CreateProfile = () => {
             </div>
             <div className="w-full mb-6">
               <label
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-rose-700 dark:text-white"
                 htmlFor="user_avatar"
               >
                 Profile Picture
@@ -79,7 +81,7 @@ const CreateProfile = () => {
                 type="file"
               />
               <div
-                className="mt-1 text-sm text-gray-500 dark:text-gray-300"
+                className="mt-1 text-sm text-red-500 dark:text-gray-300"
                 id="user_avatar_help"
               >
                 A profile picture is essential to verify that you are a human
@@ -88,7 +90,7 @@ const CreateProfile = () => {
               </div>
             </div>
             <label
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-rose-700 dark:text-white"
               htmlFor="user_avatar"
             >
               Gender
@@ -103,7 +105,7 @@ const CreateProfile = () => {
               />
               <label
                 htmlFor="gender"
-                className="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                className="block ml-2 text-sm font-medium text-rose-700 dark:text-gray-300"
               >
                 Male
               </label>
@@ -112,11 +114,11 @@ const CreateProfile = () => {
                 type="radio"
                 name="gender"
                 value="female"
-                className="w-4 ml-16 mr-2 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
+                className="w-4 ml-16 mr-2 h-4 border-gray-300 focus:ring-2 focus:ring-red-300 dark:focus:ring-red-600 dark:focus:bg-red-600 dark:bg-red-700 dark:border-red-600"
               />
               <label
                 htmlFor="gender"
-                className="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                className="block ml-2 text-sm font-medium text-rose-700 dark:text-gray-300"
               >
                 Female
               </label>
@@ -129,7 +131,7 @@ const CreateProfile = () => {
               />
               <label
                 htmlFor="gender"
-                className="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                className="block ml-2 text-sm font-medium text-rose-700 dark:text-gray-300"
               >
                 Others
               </label>
@@ -138,7 +140,7 @@ const CreateProfile = () => {
             <button
               id="dropdownDefaultButton"
               onClick={toggleDropdown}
-              className="flex justify-center items-center p-1.5 py-2 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
+              className="flex justify-center items-center p-1.5 py-2 mb-2 mr-2 overflow-hidden text-sm font-medium text-rose-700 rounded-lg group bg-gradient-to-r from-red-200 via-red-300 to-yellow-100 hover:bg-gradient-to-bl hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
               type="button"
             >
               I prefer{" "}
@@ -239,7 +241,7 @@ const CreateProfile = () => {
             <div className="mb-6">
               <label
                 htmlFor="bio"
-                className="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="mb-2 text-sm font-medium text-rose-700 dark:text-white"
               >
                 Your Bio
               </label>
@@ -255,7 +257,7 @@ const CreateProfile = () => {
             <div className="mb-6">
               <label
                 htmlFor="date_of_birth"
-                className="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="mb-2 text-sm font-medium text-rose-700 dark:text-white"
               >
                 Date of birth
               </label>
@@ -265,8 +267,8 @@ const CreateProfile = () => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
-            <button className="flex justify-center items-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
-              <span className="w-full flex justify-center items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+            <button className="flex justify-center items-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+              <span className="w-full flex justify-center items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 text-rose-700">
                 Submit
               </span>
             </button>
