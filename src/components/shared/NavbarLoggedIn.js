@@ -25,8 +25,8 @@ const NavbarLoggedIn = () => {
         <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
           <Link to="/" onClick={refreshPage}>
             <div className="mt-3 text-sm">
-              <h1 className="text-3xl lg:text-4xl pl-5 lg:pl-3 font-semibold cursor-pointer">
-                Minder
+              <h1 className="text-3xl lg:text-4xl pl-5 lg:pl-3 font-semibold  cursor-pointer font-fornavbar text-red-black">
+              Minder 💋
               </h1>
             </div>
           </Link>
@@ -48,8 +48,8 @@ const NavbarLoggedIn = () => {
 
           {/* {Right} */}
           <div className="flex place-items-center justify-end space-x-4">
-            <HomeIcon className="navBtn" />
-            <MenuIcon className="h-6 md:hidden cursor-pointer navBtn" />
+            <HomeIcon className="navBtn " />
+            <MenuIcon className="h-6 md:hidden cursor-pointer navBtn red" />
             <PaperAirplaneIcon className="navBtn" />
             <HeartIcon className="navBtn" />
 
