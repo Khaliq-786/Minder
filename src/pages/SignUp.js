@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Footer from "../components/shared/Footer";
 import Navbar from "../components/shared/Navbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,12 @@ import loginimg from "../images/loginimg.jpg";
 
 const SignUp = () => {
   let navigate = useNavigate();
-
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/Home");
+    }
+    // eslint-disable-next-line
+  }, []);
   function errormessage(message = "Internal server error") {
     //Function to display error messages recieved from backend server
     let dropdown = document.getElementById("errormessage");
@@ -60,7 +64,7 @@ const SignUp = () => {
 
       {/* New section */}
 
-      <section class="bg-gradient-to-br from-red-50 via-red-100 to-yellow-200 min-h-screen flex items-center justify-center">
+      <section className="bg-gradient-to-br from-red-50 via-red-100 to-yellow-200 min-h-screen flex items-center justify-center">
         {/* <!-- login container --> */}
         <div className="bg-gradient-to-br from-red-150 via-red-150 to-yellow-50 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center mt-20 mb-10">
           {/* <!-- form --> */}
@@ -227,7 +231,7 @@ const SignUp = () => {
 
           {/* <!-- image --> */}
           <div className="md:block hidden w-1/2">
-            <img className="rounded-2xl" src={loginimg} />
+            <img className="rounded-2xl" src={loginimg} alt="couple" />
           </div>
         </div>
       </section>

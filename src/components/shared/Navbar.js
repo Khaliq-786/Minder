@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   SearchIcon,
@@ -33,6 +33,7 @@ const Navbar = (props) => {
   const handleNav = () => {
     setNav(!nav);
   };
+
   return (
     <>
       <div className="flex w-full justify-between items-center h-20 px-4 absolute right-7 z-10">
@@ -47,14 +48,18 @@ const Navbar = (props) => {
         </Link>
         <ul className="hidden lg:font-fornavbarmiddle lg:flex">
           <Link to="/" onClick={refreshPage}>
-            <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">Home</li>
+            <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">
+              Home
+            </li>
           </Link>
           <Link to="/AboutUs">
             <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">
               About Us
             </li>
           </Link>
-          <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">Reviews</li>
+          <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">
+            Reviews
+          </li>
           <Link to="/PrivacyPolicy">
             <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">
               {" "}

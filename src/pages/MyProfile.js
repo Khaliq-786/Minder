@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import NavbarLoggedIn from "../components/shared/NavbarLoggedIn";
 import Footer from "../components/shared/Footer";
 import temppic from "../images/bgm1.jpg";
+import profileContext from "../context/profiles/profileContext";
+import { useNavigate } from "react-router-dom";
 
 const MyProfile = () => {
+  let navigate = useNavigate();
+  const context = useContext(profileContext);
+  const { profile, getProfile } = context;
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      getProfile();
+    } else {
+      navigate("/Login");
+    }
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <>
       <NavbarLoggedIn />
@@ -12,11 +27,15 @@ const MyProfile = () => {
           <img src={temppic} alt="Profile Pic" className="w-40 rounded-full" />
         </div>
         <div className="text-5xl font-semibold w-full text-center mt-7">
-          khaliq786
+          {profile.username}
         </div>
         <div className="w-full flex justify-center my-5 mt-16">
-          <div className="mx-10 border-2 border-dotted border-slate-500 rounded-lg relative right- py-3 px-10">Khaliq</div>
-          <div className="mx-10 border-2 border-dotted border-slate-500 rounded-lg relative left- py-3 px-10">Hussain</div>
+          <div className="mx-10 border-2 border-dotted border-slate-500 rounded-lg relative right- py-3 px-10">
+            {profile.first_name}
+          </div>
+          <div className="mx-10 border-2 border-dotted border-slate-500 rounded-lg relative left- py-3 px-10">
+            {profile.last_name}
+          </div>
         </div>
       </div>
       <Footer />

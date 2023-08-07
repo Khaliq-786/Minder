@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
 import profileContext from "../../context/profiles/profileContext";
 import {
   SearchIcon,
@@ -11,14 +10,25 @@ import {
   MenuIcon,
 } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
+import { useNavigate } from "react-router-dom";
 
 const NavbarLoggedIn = () => {
+  let navigate = useNavigate();
   const context = useContext(profileContext);
-  const { profile, setProfile } = context;
+  const { profile,getProfile } = context;
   function refreshPage() {
     let location = window.location.pathname;
     if (location === "/") window.location.reload(false);
   }
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      getProfile();
+    } else {
+      navigate("/Login");
+    }
+    // eslint-disable-next-line
+  }, []);
+  
   return (
     <>
       <div className="shadow-sm border-b bg-white sticky top-0 z-50">
@@ -26,7 +36,7 @@ const NavbarLoggedIn = () => {
           <Link to="/" onClick={refreshPage}>
             <div className="mt-3 text-sm">
               <h1 className="text-3xl lg:text-4xl pl-5 lg:pl-3 font-semibold  cursor-pointer font-fornavbar text-red-black">
-              Minder 💋
+                Minder 💋
               </h1>
             </div>
           </Link>
@@ -47,17 +57,47 @@ const NavbarLoggedIn = () => {
           </div>
 
           {/* {Right} */}
-          <div className="flex place-items-center justify-end space-x-4">
+          <div className="flex place-items-center justify-end space-x-4 cursor-pointer">
             <HomeIcon className="navBtn " />
             <MenuIcon className="h-6 md:hidden cursor-pointer navBtn red" />
             <PaperAirplaneIcon className="navBtn" />
             <HeartIcon className="navBtn" />
 
             <img
+              onClick={() => {
+                //Enable dropdown show/hide fucntionality
+                let dropdown = document.getElementById("dropdown");
+                dropdown.classList.toggle("hidden");
+              }}
               src="https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2012/10/image1.jpg?w=500&ssl=1"
               className="h-10 rounded-full cursor-pointer navBtn"
+              alt="Profile pic"
             />
             <div className="font-semibold">{profile.username}</div>
+          </div>
+          <div
+            id="dropdown"
+            className="absolute hidden right-48 top-16 bg-gray-200 p-4 px-8 mt-1"
+          >
+            <div className="flex flex-col divide-y-2 divide-black">
+              <div
+                onClick={() => {
+                  navigate("/MyProfile");
+                }}
+                className="py-2 cursor-pointer"
+              >
+                My profile
+              </div>
+              <div
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/Login");
+                }}
+                className="py-2 cursor-pointer"
+              >
+                Logout
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import NavbarLoggedIn from "../components/shared/NavbarLoggedIn";
 import Footer from "../components/shared/Footer";
-// import Post from "../components/home/Post"
 import Feed from "../components/shared/Feed";
 
 const Home = () => {
+  let navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token") === null) {
+      navigate("/Login");
+    }
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <>
       <NavbarLoggedIn />
       <div className="h-screen flex justify-center items-center">
-        <Post/>
+        <Feed />
       </div>
       <Footer />
     </>

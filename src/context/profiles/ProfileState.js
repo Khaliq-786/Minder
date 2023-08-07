@@ -2,17 +2,27 @@ import React, { useState } from "react";
 import ProfileContext from "./profileContext";
 
 const ProfileState = (props) => {
-  const profileinitial = {
-    _id: "64c902b7de6c83868bc6d383",
-    user: "64c9027dde6c83868bc6d37a",
-    username: "khaliq786",
-    first_name: "Khaliq",
-    last_name: "Hussain",
-    __v: 0,
-  };
+  const host = "http://localhost:5000";
+  const profileinitial = {};
+
   const [profile, setProfile] = useState(profileinitial);
+
+  //Get My profile data
+  const getProfile = async () => {
+    //API call
+    const response = await fetch(`${host}/api/profile/getprofile`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem('token'),
+      },
+    });
+    const json = await response.json();
+    setProfile(json[0]);
+  };
+
   return (
-    <ProfileContext.Provider value={{ profile, setProfile }}>
+    <ProfileContext.Provider value={{ profile, setProfile, getProfile }}>
       {props.children}
     </ProfileContext.Provider>
   );

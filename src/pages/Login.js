@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Footer from "../components/shared/Footer";
 import Navbar from "../components/shared/Navbar";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import loginimg from "../images/loginimg.jpg";
 
 const Login = () => {
   let navigate = useNavigate();
-
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/Home");
+    }
+    // eslint-disable-next-line
+  }, []);
   function errormessage(message) {
     let dropdown = document.getElementById("errormessage");
     dropdown.innerHTML = message;
@@ -36,7 +40,7 @@ const Login = () => {
     if (json.success) {
       //Save the auth token and redirect
 
-      localStorage.setItem("token", json.authtoken);
+      localStorage.setItem("token", json.authToken);
       navigate("/Home");
     } else {
       errormessage(json.error);
@@ -167,7 +171,7 @@ const Login = () => {
 
           {/* <!-- image --> */}
           <div className="md:block hidden w-1/2">
-            <img className="rounded-2xl" src={loginimg} />
+            <img className="rounded-2xl" src={loginimg} alt="Couple" />
           </div>
         </div>
       </section>
