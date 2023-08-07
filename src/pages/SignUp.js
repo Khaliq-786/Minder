@@ -9,7 +9,7 @@ import loginimg from "../images/loginimg.jpg";
 const SignUp = () => {
   let navigate = useNavigate();
 
-  function errormessage(message) {
+  function errormessage(message = "Internal server error") {
     //Function to display error messages recieved from backend server
     let dropdown = document.getElementById("errormessage");
     dropdown.innerHTML = message;
@@ -320,11 +320,11 @@ const SignUp = () => {
               id="passwroddetails"
             >
               <ul className="inline-block list-disc">
-                <li>Password must be of minimum length 8</li>
-                <li>Password must have atleast 1 uppercase letter</li>
-                <li>Password must have atleast 1 lowercase letter</li>
-                <li>Password must have atleast 1 number</li>
-                <li>Password must have atleast 1 special character</li>
+                <li className="text-left">Password must be of minimum length 8</li>
+                <li className="text-left">Password must have atleast 1 uppercase letter</li>
+                <li className="text-left">Password must have atleast 1 lowercase letter</li>
+                <li className="text-left">Password must have atleast 1 number</li>
+                <li className="text-left">Password must have atleast 1 special character</li>
               </ul>
             </div>
             <div

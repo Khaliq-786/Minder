@@ -9,7 +9,7 @@ const Home = () => {
     <>
       <NavbarLoggedIn />
       <div className="h-screen flex justify-center items-center">
-        <Feed/>
+        <Post/>
       </div>
       <Footer />
     </>

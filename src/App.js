@@ -11,6 +11,7 @@ import TnC from "./pages/TnC";
 import CreateProfile from "./pages/CreateProfile";
 import ProfileState from "./context/profiles/ProfileState";
 import Home from "./pages/Home";
+import MyProfile from "./pages/MyProfile";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route exact path="/TnC" element={<TnC />} />
           <Route exact path="/CreateProfile" element={<CreateProfile />} />
           <Route exact path="/Home" element={<Home />} />
+          <Route exact path="/MyProfile" element={<MyProfile />} />
         </Routes>
       </Router>
       </ProfileState>

@@ -22,7 +22,7 @@ import {
 import { BsPerson } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = (props) => {
   let navigate = useNavigate();
   function refreshPage() {
     let location = window.location.pathname;
@@ -38,29 +38,31 @@ const Navbar = () => {
       <div className="flex w-full justify-between items-center h-20 px-4 absolute right-7 z-10">
         <Link to="/" onClick={refreshPage}>
           <div>
-            <h1 className="text-3xl font-bold lg:text-4xl ml-8 pl-5 lg:pl-3  cursor-pointer font-fornavbar text-red-700">
+            <h1
+              className={`text-3xl font-bold lg:text-4xl ml-8 pl-5 lg:pl-3  cursor-pointer font-fornavbar ${props.fontcolor}`}
+            >
               Minder 💋
             </h1>
           </div>
         </Link>
         <ul className="hidden lg:font-fornavbarmiddle lg:flex">
           <Link to="/" onClick={refreshPage}>
-            <li className="p-4 text-3xl cursor-pointer text-red-700 font-bold">Home</li>
+            <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">Home</li>
           </Link>
           <Link to="/AboutUs">
-            <li className="p-4 text-3xl cursor-pointer text-red-700  font-bold">
+            <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">
               About Us
             </li>
           </Link>
-          <li className="p-4 text-3xl cursor-pointer text-red-700  font-bold">Reviews</li>
+          <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">Reviews</li>
           <Link to="/PrivacyPolicy">
-            <li className="p-4 text-3xl cursor-pointer text-red-700  font-bold">
+            <li className="p-4 text-xl cursor-pointer text-red-700 font-bold">
               {" "}
               Privacy Policy
             </li>
           </Link>
           <Link to="/Download">
-            <li className="p-4 text-3xl cursor-pointer  text-red-700  font-bold ">
+            <li className="p-4 text-xl cursor-pointer  text-red-700 font-bold ">
               Downloads
             </li>
           </Link>
@@ -127,7 +129,7 @@ const Navbar = () => {
                 onClick={() => {
                   navigate("/Login");
                 }}
-                className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
+                className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
               >
                 <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                   Log In
@@ -138,7 +140,7 @@ const Navbar = () => {
                 onClick={() => {
                   navigate("/Signup");
                 }}
-                className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800"
+                className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
               >
                 <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                   Sign Up
@@ -159,4 +161,7 @@ const Navbar = () => {
   );
 };
 
+Navbar.defaultProps = {
+  fontcolor: "text-red-700",
+};
 export default Navbar;
