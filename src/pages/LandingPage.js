@@ -7,7 +7,7 @@ import Footer from "../components/shared/Footer";
 const LandingPage = () => {
   return (
     <>
-        <Navbar />  
+        <Navbar fontcolor = "text-white" />  
         <Carousel/>
         <Intro/>
         <Footer/>
