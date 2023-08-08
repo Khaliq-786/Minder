@@ -16,6 +16,8 @@ const NavbarLoggedIn = () => {
   let navigate = useNavigate();
   const context = useContext(profileContext);
   const { profile,getProfile } = context;
+  const imglink = "http://localhost:5000/"+profile.image;
+  console.log(imglink);
   function refreshPage() {
     let location = window.location.pathname;
     if (location === "/") window.location.reload(false);
@@ -69,7 +71,7 @@ const NavbarLoggedIn = () => {
                 let dropdown = document.getElementById("dropdown");
                 dropdown.classList.toggle("hidden");
               }}
-              src={profile.profileImg}
+              src={imglink}
               className="h-10 rounded-full cursor-pointer navBtn"
               alt="Profile pic"
             />
