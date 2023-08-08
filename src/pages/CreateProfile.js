@@ -4,7 +4,7 @@ import NavbarLoggedIn from "../components/shared/NavbarLoggedIn";
 
 const CreateProfile = () => {
   function toggleDropdown() {
-    let dropdown = document.getElementById("dropdown");
+    let dropdown = document.getElementById("dropdownmenu");
     dropdown.classList.toggle("hidden");
   }
 
@@ -186,7 +186,7 @@ const CreateProfile = () => {
             </button>
             {/* <!-- Dropdown menu --> */}
             <div
-              id="dropdown"
+              id="dropdownmenu"
               className="relative text-center justify-center pb-0 mb-0 top-0 right-0 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700"
             >
               <ul
