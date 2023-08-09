@@ -14,12 +14,15 @@ const ProfileState = (props) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": localStorage.getItem('token'),
+        "auth-token": localStorage.getItem("token"),
       },
     });
     const json = await response.json();
     // console.log(json);
-    setProfile(json[0]);
+    if (json.success) {
+      setProfile(json.profile[0]);
+    } else {
+    }
   };
 
   return (

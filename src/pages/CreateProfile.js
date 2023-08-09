@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Footer from "../components/shared/Footer";
 import Navbar from "../components/shared/Navbar";
 import { useNavigate } from "react-router-dom";
 
 const CreateProfile = () => {
+  let navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token") === null) {
+      navigate("/Login");
+    }
+    // eslint-disable-next-line
+  }, []);
   function errormessage(message) {
     let dropdown = document.getElementById("errormessage");
     dropdown.innerHTML = message;
     dropdown.classList.toggle("hidden");
   }
-  let navigate = useNavigate();
 
   const host = "http://localhost:5000";
   function toggleDropdown() {
@@ -17,86 +23,30 @@ const CreateProfile = () => {
     dropdown.classList.toggle("hidden");
   }
 
-  const [credentials, setCredentials] = useState({
-    username: "",
-    first_name: "",
-    last_name: "",
-    gender: "",
-    dating_prefrence: "",
-    bio: "",
-    date_of_birth: "",
-    profileImg: "",
-  });
-
-  const onChange = (e) => {
-    if (e.target.name === "profileImg") {
-      const file = e.target.file; // Get the selected file
-      setCredentials({
-        ...credentials,
-        profileImg: file,
-      });
-    } else {
-      setCredentials({ ...credentials, [e.target.name]: e.target.value });
-    }
-  };
+  // console.log(Array.from(data));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const genderRadioButtons = document.getElementsByName("gender");
-    let selectedGender = "";
-    for (let i = 0; i < genderRadioButtons.length; i++) {
-      if (genderRadioButtons[i].checked) {
-        selectedGender = genderRadioButtons[i].value;
-        break;
-      }
-    }
-
-    const datingRadioButtons = document.getElementsByName("dating_prefrence");
-    let selectedDatingPrefrence = "";
-    for (let i = 0; i < datingRadioButtons.length; i++) {
-      if (datingRadioButtons[i].checked) {
-        selectedDatingPrefrence = datingRadioButtons[i].value;
-        break;
-      }
-    }
-
-    setCredentials({
-      ...credentials,
-      gender: selectedGender,
-      dating_prefrence: selectedDatingPrefrence,
-    });
-
-    console.log(credentials);
-
-    // console.log(selectedValue);
+    // Create FormData object using the form data after the form has been submitted
+    const form = document.getElementById("form");
+    const data = new FormData(form);
     const response = await fetch(`${host}/api/profile/createprofile`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         "auth-token": localStorage.getItem("token"),
       },
-      body: JSON.stringify({
-        username: credentials.username,
-        first_name: credentials.first_name,
-        last_name: credentials.last_name,
-        gender: credentials.gender,
-        dating_prefrence: credentials.dating_prefrence,
-        bio: credentials.bio,
-        date_of_birth: credentials.date_of_birth,
-        profileImg: credentials.profileImg,
-      }),
+      body: data,
     });
 
     const json = await response.json();
     if (json.success) {
-      //Save the auth token and redirect
+      //Redirect to My Profile page
 
-      // localStorage.setItem("token", json.authToken);
       navigate("/MyProfile");
     } else {
-      // errormessage(json.error);
-      console.log(json.error);
+      errormessage(json.error);
+      // console.log(json.error);
     }
   };
   return (
@@ -105,6 +55,7 @@ const CreateProfile = () => {
       <div className="bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 min-h-screen flex items-center justify-center">
         <div className="p-5  mb-8 mt-24  rounded-lg border-dashed border-2 border-red-700    flex justify-center items-center h-5/6 w-9/12">
           <form
+            id="form"
             encType="multipart/form-data"
             onSubmit={handleSubmit}
             className="w-3/6 flex flex-col  "
@@ -125,8 +76,6 @@ const CreateProfile = () => {
                 type="username"
                 id="username"
                 name="username"
-                value={credentials.username}
-                onChange={onChange}
                 placeholder="Select username"
                 required
               />
@@ -144,8 +93,6 @@ const CreateProfile = () => {
                   type="name"
                   id="first_name"
                   name="first_name"
-                  value={credentials.first_name}
-                  onChange={onChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Enter First name"
                   required
@@ -162,8 +109,6 @@ const CreateProfile = () => {
                   type="name"
                   id="last_name"
                   name="last_name"
-                  value={credentials.last_name}
-                  onChange={onChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Enter Last name"
                 />
@@ -181,8 +126,6 @@ const CreateProfile = () => {
                 aria-describedby="user_avatar_help"
                 id="profileImg"
                 name="profileImg"
-                value={credentials.profileImg}
-                onChange={onChange}
                 type="file"
               />
               <div
@@ -359,8 +302,6 @@ const CreateProfile = () => {
               <textarea
                 name="bio"
                 id="bio"
-                value={credentials.bio}
-                onChange={onChange}
                 cols="30"
                 rows="10"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -378,11 +319,15 @@ const CreateProfile = () => {
                 type="date"
                 id="date_of_birth"
                 name="date_of_birth"
-                value={credentials.date_of_birth}
-                onChange={onChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
+            {/* errormessage */}
+            <div
+              className="text-sm text-center font-bold text-red-950 pb-3 mb-2 hidden"
+              id="errormessage"
+            ></div>
+            {/* errormessage */}
             <button className="flex justify-center items-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
               <span className="w-full flex justify-center items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 text-rose-700">
                 Submit

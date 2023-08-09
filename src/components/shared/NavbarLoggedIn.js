@@ -15,8 +15,9 @@ import { useNavigate } from "react-router-dom";
 const NavbarLoggedIn = () => {
   let navigate = useNavigate();
   const context = useContext(profileContext);
-  const { profile,getProfile } = context;
-  const imglink = "http://localhost:5000/"+profile.image;
+  const { profile, getProfile } = context;
+  const imglink = profile ? "http://localhost:5000/" + profile.image : "";
+
   function refreshPage() {
     let location = window.location.pathname;
     if (location === "/") window.location.reload(false);
@@ -29,7 +30,12 @@ const NavbarLoggedIn = () => {
     }
     // eslint-disable-next-line
   }, []);
-  
+  useEffect(() => {
+    if (profile === null || profile === undefined) {
+      navigate("/CreateProfile");
+    }
+  }, [profile]);
+
   return (
     <>
       <div className="shadow-sm border-b bg-white sticky top-0 z-50">
@@ -74,7 +80,7 @@ const NavbarLoggedIn = () => {
               className="h-10 rounded-full cursor-pointer navBtn"
               alt="Profile pic"
             />
-            <div className="font-semibold">{profile.username}</div>
+            <div className="font-semibold">{profile? profile.username: "Your username here"}</div>
           </div>
           <div
             id="dropdown"
