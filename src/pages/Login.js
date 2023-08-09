@@ -53,7 +53,7 @@ const Login = () => {
 
       {/* New section */}
 
-      <section class="bg-gradient-to-br from-red-50 via-red-100 to-yellow-200 min-h-screen flex items-center justify-center">
+      <section className="bg-gradient-to-br from-red-50 via-red-100 to-yellow-200 min-h-screen flex items-center justify-center">
         {/* <!-- login container --> */}
         <div className="bg-gradient-to-br from-red-150 via-red-150 to-yellow-50 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
           {/* <!-- form --> */}

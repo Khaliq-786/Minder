@@ -1,8 +1,17 @@
 import React, { useState } from "react";
 import Footer from "../components/shared/Footer";
-import NavbarLoggedIn from "../components/shared/NavbarLoggedIn";
+import Navbar from "../components/shared/Navbar";
+import { useNavigate } from "react-router-dom";
 
 const CreateProfile = () => {
+  function errormessage(message) {
+    let dropdown = document.getElementById("errormessage");
+    dropdown.innerHTML = message;
+    dropdown.classList.toggle("hidden");
+  }
+  let navigate = useNavigate();
+
+  const host = "http://localhost:5000";
   function toggleDropdown() {
     let dropdown = document.getElementById("dropdownmenu");
     dropdown.classList.toggle("hidden");
@@ -18,16 +27,88 @@ const CreateProfile = () => {
     date_of_birth: "",
     profileImg: "",
   });
+
   const onChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    if (e.target.name === "profileImg") {
+      const file = e.target.file; // Get the selected file
+      setCredentials({
+        ...credentials,
+        profileImg: file,
+      });
+    } else {
+      setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const genderRadioButtons = document.getElementsByName("gender");
+    let selectedGender = "";
+    for (let i = 0; i < genderRadioButtons.length; i++) {
+      if (genderRadioButtons[i].checked) {
+        selectedGender = genderRadioButtons[i].value;
+        break;
+      }
+    }
+
+    const datingRadioButtons = document.getElementsByName("dating_prefrence");
+    let selectedDatingPrefrence = "";
+    for (let i = 0; i < datingRadioButtons.length; i++) {
+      if (datingRadioButtons[i].checked) {
+        selectedDatingPrefrence = datingRadioButtons[i].value;
+        break;
+      }
+    }
+
+    setCredentials({
+      ...credentials,
+      gender: selectedGender,
+      dating_prefrence: selectedDatingPrefrence,
+    });
+
+    console.log(credentials);
+
+    // console.log(selectedValue);
+    const response = await fetch(`${host}/api/profile/createprofile`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        username: credentials.username,
+        first_name: credentials.first_name,
+        last_name: credentials.last_name,
+        gender: credentials.gender,
+        dating_prefrence: credentials.dating_prefrence,
+        bio: credentials.bio,
+        date_of_birth: credentials.date_of_birth,
+        profileImg: credentials.profileImg,
+      }),
+    });
+
+    const json = await response.json();
+    if (json.success) {
+      //Save the auth token and redirect
+
+      // localStorage.setItem("token", json.authToken);
+      navigate("/MyProfile");
+    } else {
+      // errormessage(json.error);
+      console.log(json.error);
+    }
+  };
   return (
     <>
-      <NavbarLoggedIn />
+      <Navbar />
       <div className="bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 min-h-screen flex items-center justify-center">
         <div className="p-5  mb-8 mt-24  rounded-lg border-dashed border-2 border-red-700    flex justify-center items-center h-5/6 w-9/12">
-          <form className="w-3/6 flex flex-col  ">
+          <form
+            encType="multipart/form-data"
+            onSubmit={handleSubmit}
+            className="w-3/6 flex flex-col  "
+          >
             <div className="text-5xl tex justify-center items-center align-middle mt-4 mb-6 mx-auto font-light text-rose-700 font-fornavbar">
               Tell us about yourself 💞 !!
             </div>
@@ -197,7 +278,8 @@ const CreateProfile = () => {
                   <input
                     type="radio"
                     name="dating_prefrence"
-                    id="men"
+                    id="male"
+                    value="male"
                     className="inline-block px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   />
                   <label htmlFor="men" className="p-2">
@@ -208,7 +290,8 @@ const CreateProfile = () => {
                   <input
                     type="radio"
                     name="dating_prefrence"
-                    id="women"
+                    id="female"
+                    value="female"
                     className="inline-block px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   />
                   <label htmlFor="women" className="p-2">
@@ -220,6 +303,7 @@ const CreateProfile = () => {
                     type="radio"
                     name="dating_prefrence"
                     id="gay"
+                    value="gay"
                     className="inline-block px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   />
                   <label htmlFor="gay" className="p-2">
@@ -231,6 +315,7 @@ const CreateProfile = () => {
                     type="radio"
                     name="dating_prefrence"
                     id="lesbians"
+                    value="lesbian"
                     className="inline-block px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   />
                   <label htmlFor="lesbians" className="p-2">
@@ -242,6 +327,7 @@ const CreateProfile = () => {
                     type="radio"
                     name="dating_prefrence"
                     id="bisexual"
+                    value="bisexual"
                     className="inline-block px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   />
                   <label htmlFor="bisexual" className="p-2">
@@ -253,6 +339,7 @@ const CreateProfile = () => {
                     type="radio"
                     name="dating_prefrence"
                     id="queer"
+                    value="queer"
                     className="inline-block px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   />
                   <label htmlFor="queer" className="p-2">
