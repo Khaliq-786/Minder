@@ -1,5 +1,5 @@
 import React from "react";
-import carouselvid from "../../images/carouselvid.mp4";
+import carouselvid from "../../images/vid.mp4";
 
 const Carousel = () => {
   return (

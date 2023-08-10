@@ -38,24 +38,27 @@ const NavbarLoggedIn = () => {
 
   return (
     <>
-      <div className="shadow-sm border-b bg-white sticky top-0 z-50">
+      <div className=" border-b bg-gradient-to-br from-yellow-50 to bg-red-100 shadow-lg shadow-black/30 sticky top-0 z-50 w-ful">
         <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
           <Link to="/" onClick={refreshPage}>
-            <div className="mt-3 text-sm">
-              <h1 className="text-3xl lg:text-4xl pl-5 lg:pl-3 font-semibold  cursor-pointer font-fornavbar text-red-black">
-                Minder 💋
+            <div className="mt-4 text-sm inline-flex">
+              <h1 className="text-3xl hidden sm:inline-flex lg:text-4xl pl-5 lg:pl-3 font-semibold  cursor-pointer font-fornavbar text-red-black">
+                Minder 
+              </h1>
+              <h1 className="text-3xl sm:2xl md:3xl lg:text-4xl pl-5 lg:pl-3 font-semibold  cursor-pointer font-fornavbar text-red-black">
+                💋
               </h1>
             </div>
           </Link>
 
           {/* {Middle} */}
-          <div className="max-w-xs ml-20">
+          <div className="max-w-xs ml-10">
             <div className="relative mt-1 p-3 rounded-md">
               <div className="absolute inset-y-0 pl-3 flex items-center pointer-events-none">
                 <SearchIcon className="h-5 w-5 text-gray-500" />
               </div>
               <input
-                className="bg-gray-50 block w-full pl-10 sm:text-sm
+                className="bg-red-50 block w-full pl-10 sm:text-sm
           border-gray-300 focus:ring-black focus:border-black rounded-md px-12 py-2"
                 type="text"
                 placeholder="Search"
@@ -77,10 +80,10 @@ const NavbarLoggedIn = () => {
                 dropdown.classList.toggle("hidden");
               }}
               src={imglink}
-              className="h-10 rounded-full cursor-pointer navBtn"
+              className="h-10 rounded-full mx-3 inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out"
               alt="Profile pic"
             />
-            <div className="font-semibold">{profile? profile.username: "Your username here"}</div>
+            <div className="font-semibold hidden md:block">{profile.username}</div>
           </div>
           <div
             id="dropdown"
