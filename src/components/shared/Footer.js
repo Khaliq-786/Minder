@@ -8,7 +8,7 @@ const Footer = () => {
   }
   return (
     <>
-      <footer className="w-full bg-black text-white shadow dark:bg-gray-800">
+      <footer className="w-full bg-gradient-to-br from-yellow-50 to bg-red-100 text-gray-800 shadow-lg dark:bg-gray-800 z-50">
         <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
           <span className="text-sm text-gray-500 sm:text-center">
             © 2023{" "}

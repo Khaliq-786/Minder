@@ -15,11 +15,16 @@ const Home = () => {
 
   return (
     <>
-      <NavbarLoggedIn />
-      <div className=" bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 h-screen flex justify-center items-center">
-        <Feed/>
+      <div className="flex-col">
+        <NavbarLoggedIn />
+        <div className="flex-col h-full justify-center items-center"> 
+        <div className=" bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 h-screen flex justify-center items-center">
+          <Feed />
+          {/* <Demo/> */}
+        </div>
+        <Footer />
+        </div>
       </div>
-      <Footer />
     </>
   );
 };
