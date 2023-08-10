@@ -1,21 +1,65 @@
-import React from "react";
-import Navbar from "../components/shared/Navbar";
+import React, { useEffect } from "react";
 import Footer from "../components/shared/Footer";
+import Navbar from "../components/shared/Navbar";
+import { useNavigate } from "react-router-dom";
 
 const CreateProfile = () => {
-  function toggleDropdown() {
-    let dropdown = document.getElementById("dropdown");
+  let navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token") === null) {
+      navigate("/Login");
+    }
+    // eslint-disable-next-line
+  }, []);
+  function errormessage(message) {
+    let dropdown = document.getElementById("errormessage");
+    dropdown.innerHTML = message;
     dropdown.classList.toggle("hidden");
   }
 
+  const host = "http://localhost:5000";
+  function toggleDropdown() {
+    let dropdown = document.getElementById("dropdownmenu");
+    dropdown.classList.toggle("hidden");
+  }
 
+  // console.log(Array.from(data));
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Create FormData object using the form data after the form has been submitted
+    const form = document.getElementById("form");
+    const data = new FormData(form);
+    const response = await fetch(`${host}/api/profile/createprofile`, {
+      method: "POST",
+      headers: {
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: data,
+    });
+
+    const json = await response.json();
+    if (json.success) {
+      //Redirect to My Profile page
+
+      navigate("/MyProfile");
+    } else {
+      errormessage(json.error);
+      // console.log(json.error);
+    }
+  };
   return (
     <>
       <Navbar />
       <div className="bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 min-h-screen flex items-center justify-center">
         <div className="p-5  mb-8 mt-24  rounded-lg border-dashed border-2 border-red-700    flex justify-center items-center h-5/6 w-9/12">
-          <form className="w-3/6 flex flex-col  ">
+          <form
+            id="form"
+            encType="multipart/form-data"
+            onSubmit={handleSubmit}
+            className="w-3/6 flex flex-col  "
+          >
             <div className="text-5xl tex justify-center items-center align-middle mt-4 mb-6 mx-auto font-light text-rose-700 font-fornavbar">
               Tell us about yourself 💞 !!
             </div>
@@ -31,6 +75,7 @@ const CreateProfile = () => {
                 className="bg-gray-50  text-gray-900 text-sm rounded-lg w-full p-2.5 border focus:ring-red-500 focus:border-red-500"
                 type="username"
                 id="username"
+                name="username"
                 placeholder="Select username"
                 required
               />
@@ -46,7 +91,8 @@ const CreateProfile = () => {
                 </label>
                 <input
                   type="name"
-                  id="fname"
+                  id="first_name"
+                  name="first_name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Enter First name"
                   required
@@ -61,7 +107,8 @@ const CreateProfile = () => {
                 </label>
                 <input
                   type="name"
-                  id="lname"
+                  id="last_name"
+                  name="last_name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Enter Last name"
                 />
@@ -77,7 +124,8 @@ const CreateProfile = () => {
               <input
                 className="block w-full py-2 px-1 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 h-full"
                 aria-describedby="user_avatar_help"
-                id="user_avatar"
+                id="profileImg"
+                name="profileImg"
                 type="file"
               />
               <div
@@ -162,7 +210,7 @@ const CreateProfile = () => {
             </button>
             {/* <!-- Dropdown menu --> */}
             <div
-              id="dropdown"
+              id="dropdownmenu"
               className="relative text-center justify-center pb-0 mb-0 top-0 right-0 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700"
             >
               <ul
@@ -173,7 +221,8 @@ const CreateProfile = () => {
                   <input
                     type="radio"
                     name="dating_prefrence"
-                    id="men"
+                    id="male"
+                    value="male"
                     className="inline-block px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   />
                   <label htmlFor="men" className="p-2">
@@ -184,7 +233,8 @@ const CreateProfile = () => {
                   <input
                     type="radio"
                     name="dating_prefrence"
-                    id="women"
+                    id="female"
+                    value="female"
                     className="inline-block px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   />
                   <label htmlFor="women" className="p-2">
@@ -196,6 +246,7 @@ const CreateProfile = () => {
                     type="radio"
                     name="dating_prefrence"
                     id="gay"
+                    value="gay"
                     className="inline-block px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   />
                   <label htmlFor="gay" className="p-2">
@@ -207,6 +258,7 @@ const CreateProfile = () => {
                     type="radio"
                     name="dating_prefrence"
                     id="lesbians"
+                    value="lesbian"
                     className="inline-block px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   />
                   <label htmlFor="lesbians" className="p-2">
@@ -218,6 +270,7 @@ const CreateProfile = () => {
                     type="radio"
                     name="dating_prefrence"
                     id="bisexual"
+                    value="bisexual"
                     className="inline-block px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   />
                   <label htmlFor="bisexual" className="p-2">
@@ -229,6 +282,7 @@ const CreateProfile = () => {
                     type="radio"
                     name="dating_prefrence"
                     id="queer"
+                    value="queer"
                     className="inline-block px-4 py-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   />
                   <label htmlFor="queer" className="p-2">
@@ -264,9 +318,16 @@ const CreateProfile = () => {
               <input
                 type="date"
                 id="date_of_birth"
+                name="date_of_birth"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
+            {/* errormessage */}
+            <div
+              className="text-sm text-center font-bold text-red-950 pb-3 mb-2 hidden"
+              id="errormessage"
+            ></div>
+            {/* errormessage */}
             <button className="flex justify-center items-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
               <span className="w-full flex justify-center items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 text-rose-700">
                 Submit

@@ -15,7 +15,9 @@ import { useNavigate } from "react-router-dom";
 const NavbarLoggedIn = () => {
   let navigate = useNavigate();
   const context = useContext(profileContext);
-  const { profile,getProfile } = context;
+  const { profile, getProfile } = context;
+  const imglink = profile ? "http://localhost:5000/" + profile.image : "";
+
   function refreshPage() {
     let location = window.location.pathname;
     if (location === "/") window.location.reload(false);
@@ -28,7 +30,12 @@ const NavbarLoggedIn = () => {
     }
     // eslint-disable-next-line
   }, []);
-  
+  useEffect(() => {
+    if (profile === null || profile === undefined) {
+      navigate("/CreateProfile");
+    }
+  }, [profile]);
+
   return (
     <>
       <div className=" border-b bg-gradient-to-br from-yellow-50 to bg-red-100 shadow-lg shadow-black/30 sticky top-0 z-50 w-ful">
@@ -72,7 +79,7 @@ const NavbarLoggedIn = () => {
                 let dropdown = document.getElementById("dropdown");
                 dropdown.classList.toggle("hidden");
               }}
-              src="https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2012/10/image1.jpg?w=500&ssl=1"
+              src={imglink}
               className="h-10 rounded-full mx-3 inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out"
               alt="Profile pic"
             />

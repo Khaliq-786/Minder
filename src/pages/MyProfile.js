@@ -17,7 +17,12 @@ const MyProfile = () => {
       navigate("/Login");
     }
     // eslint-disable-next-line
-  }, []);
+  }, [profile]);
+
+  if (!profile) {
+    // Loading state while profile data is being fetched
+    return <p>Loading...</p>;
+  }
 
   return (
     <>
@@ -27,14 +32,14 @@ const MyProfile = () => {
           <img src={temppic} alt="Profile Pic" className="w-40 rounded-full" />
         </div>
         <div className="text-5xl font-semibold w-full text-center mt-7">
-          {profile.username}
+          {profile ? profile.username : "Your username here"}
         </div>
         <div className="w-full flex justify-center my-5 mt-16">
           <div className="mx-10 border-2 border-dotted border-slate-500 rounded-lg relative right- py-3 px-10">
-            {profile.first_name}
+            {profile ? profile.first_name : "First here"}
           </div>
           <div className="mx-10 border-2 border-dotted border-slate-500 rounded-lg relative left- py-3 px-10">
-            {profile.last_name}
+            {profile ? profile.last_name : "Last name here"}
           </div>
         </div>
       </div>
