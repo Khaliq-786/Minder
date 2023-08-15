@@ -6,6 +6,7 @@ import three from "../../images/three.jpg";
 import four from "../../images/four.jpg";
 import five from "../../images/five.jpg";
 
+
 const Feed = () => {
   const slides = [
     {

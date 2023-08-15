@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import NavbarLoggedIn from "../components/shared/NavbarLoggedIn";
 import Footer from "../components/shared/Footer";
 import Feed from "../components/shared/Feed";
+import ViewProfile from "./ViewProfile"
 
 const Home = () => {
   let navigate = useNavigate();
@@ -16,12 +17,13 @@ const Home = () => {
 
   return (
     <>
+    {/* <ViewProfile/> */}
       <div className="flex-col">
         <NavbarLoggedIn />
         <div className="flex-col h-full justify-center items-center"> 
         <div className=" bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 h-screen flex justify-center items-center">
           <Feed />
-          {/* <Demo/> */}
+          {/* <ViewProfile/> */}
         </div>
         <Footer />
         </div>
