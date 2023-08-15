@@ -164,7 +164,7 @@ const Feed = () => {
             {/* Front side (Image) */}
             <div
               style={{
-                backgroundImage: `url(http://localhost:5000/${slides[currentIndex].image})`,
+                backgroundImage: (slides === [])?"":`url(${slides[currentIndex].image[0]})`,
               }}
               className={`${
                 isFlipped ? "hidden" : "block"
