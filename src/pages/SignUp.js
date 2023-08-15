@@ -52,7 +52,7 @@ const SignUp = () => {
     const json = await response.json();
     if (json.success) {
       //Save the auth token and redirect
-      localStorage.setItem("token", json.authtoken);
+      localStorage.setItem("token", json.authToken);
       navigate("/CreateProfile");
     } else {
       errormessage(json.error);
@@ -222,7 +222,7 @@ const SignUp = () => {
             <div className="mt-3 text-xs flex justify-between items-center text-red-300">
               <p>Already have an account ?</p>
               <button className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300">
-                <Link className="" to="/Signup">
+                <Link className="" to="/Login">
                   Log In
                 </Link>
               </button>

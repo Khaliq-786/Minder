@@ -1,15 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  SearchIcon,
-  PlusCircleIcon,
-  UserGroupIcon,
-  HeartIcon,
-  PaperAirplaneIcon,
-  MenuIcon,
-} from "@heroicons/react/outline";
-import { HomeIcon } from "@heroicons/react/solid";
-import { BackspaceIcon } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import {
@@ -19,8 +9,21 @@ import {
   FaPinterest,
   FaYoutube,
 } from "react-icons/fa";
-import { BsPerson } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+// import { BsPerson } from "react-icons/bs";
+// import {
+//   SearchIcon,
+//   PlusCircleIcon,
+//   UserGroupIcon,
+//   HeartIcon,
+//   PaperAirplaneIcon,
+//   MenuIcon,
+// } from "@heroicons/react/outline";
+// import { HomeIcon } from "@heroicons/react/solid";
+// import { BackspaceIcon } from "react-icons/bi";
+
+
+
 
 const Navbar = (props) => {
   let navigate = useNavigate();

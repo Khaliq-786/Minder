@@ -20,7 +20,7 @@ const ProfileState = (props) => {
     const json = await response.json();
     // console.log(json);
     if (json.success) {
-      setProfile(json.profile[0]);
+      setProfile(json.profile);
     } else {
     }
   };

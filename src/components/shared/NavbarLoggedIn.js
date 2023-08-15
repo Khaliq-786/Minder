@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import profileContext from "../../context/profiles/profileContext";
 import {
   SearchIcon,
-  PlusCircleIcon,
-  UserGroupIcon,
+  // PlusCircleIcon,
+  // UserGroupIcon,
   HeartIcon,
   PaperAirplaneIcon,
   MenuIcon,
@@ -34,7 +34,7 @@ const NavbarLoggedIn = () => {
     if (profile === null || profile === undefined) {
       navigate("/CreateProfile");
     }
-  }, [profile]);
+  }, [navigate, profile]);
 
   return (
     <>
@@ -43,7 +43,7 @@ const NavbarLoggedIn = () => {
           <Link to="/" onClick={refreshPage}>
             <div className="mt-4 text-sm inline-flex">
               <h1 className="text-3xl hidden sm:inline-flex lg:text-4xl pl-5 lg:pl-3 font-semibold  cursor-pointer font-fornavbar text-red-black">
-                Minder 
+                Minder
               </h1>
               <h1 className="text-3xl sm:2xl md:3xl lg:text-4xl pl-5 lg:pl-3 font-semibold  cursor-pointer font-fornavbar text-red-black">
                 💋
@@ -83,7 +83,9 @@ const NavbarLoggedIn = () => {
               className="h-10 rounded-full mx-3 inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out"
               alt="Profile pic"
             />
-            <div className="font-semibold hidden md:block">{profile.username}</div>
+            <div className="font-semibold hidden md:block">
+              {profile.username}
+            </div>
           </div>
           <div
             id="dropdown"
