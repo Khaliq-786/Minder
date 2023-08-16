@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
+import { MdSwipeRight, MdSwipeLeft } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const Feed = () => {
@@ -96,18 +97,21 @@ const Feed = () => {
           id="pop-up1"
           className="absolute left-0 border-red-200 border-double mr-60 w-1/2 h-4/5 rounded-2xl bg-gradient-to-br from-red-150 via-red-150 to-yellow-50 duration-500 shadow-2xl shadow-black/100 inline-grid items-top"
         >
-          <span className="w-full items-center text-center mt-6 text-red-400 text-4xl">
+          <span className="w-full items-center text-center mt-6 text-black/90 text-4xl">
             CURRENT MATCHES 💓
           </span>
-          <span className="cursor-pointer hover:scale-125 transition-all duration-150 ease-out w-full  items-center text-center mt-10 text-red-400 text-2xl">
+          <span className="cursor-pointer hover:scale-125 transition-all duration-150 ease-out w-full  items-center text-center mt-10 text-black/70 text-2xl">
             Leslie Grey
           </span>
-          <span className="cursor-pointer hover:scale-125 transition-all duration-150 ease-out w-full  items-center text-center mt-6 text-red-400 text-2xl">
+          <span className="cursor-pointer hover:scale-125 transition-all duration-150 ease-out w-full  items-center text-center mt-6 text-black/70 text-2xl">
             Alisha Ray
           </span>
-          <span className="cursor-pointer hover:scale-125 transition-all duration-150 ease-out w-full items-center text-center mt-6 text-red-400 text-2xl">
+          <span className="cursor-pointer hover:scale-125 transition-all duration-150 ease-out w-full items-center text-center mt-6 text-black/70 text-2xl">
             Anna Kubov
           </span>
+        </div>
+        <div className="text-5xl text-red-200 mr-5 hover:cursor-pointer hover:scale-150 transition-all duration-150 ease-out hover:text-red-400 transform hover:-rotate-45">
+          <MdSwipeLeft />
         </div>
 
         <div
@@ -122,11 +126,6 @@ const Feed = () => {
           <div
             onClick={handleImageClick}
             style={{
-              // width: "30vw",
-              // height: "80vh",
-              // borderRadius: "20px",
-              // transition: "transform 0.6s ease",
-              // position: "relative",
               transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)", // Apply the flip effect
             }}
             className={`w-full h-full rounded-2xl relative transform transition-transform ease-in-out duration-500`}
@@ -139,23 +138,25 @@ const Feed = () => {
               }}
               className={`${
                 isFlipped ? "hidden" : "block"
-              } bg-cover bg-center bg-no-repeat w-full h-full rounded-2xl shadow-2xl shadow-black/100 text-center flex justify-center items-center `}
+              } bg-cover bg-center bg-no-repeat w-full h-full rounded-2xl shadow-2xl shadow-black/100 text-center flex justify-center items-center backdrop-blur-md `}
             >
               <div
                 onClick={() => {
                   navigate(`/ViewProfile/${slides[currentIndex]._id}`);
                 }}
                 id=" short_bio"
-                className=" hidden group-hover:block absolute bottom-0 p-10 mx-auto text-white cursor-pointer"
+                className=" hidden group-hover:block absolute bottom-0 p-10 mx-auto text-white cursor-pointer backdrop-blur-sm w-full rounded-2xl "
               >
-                <span className=" overflow-hidden text-lg">
-                  {slides[currentIndex].first_name}
+                <span className=" overflow-hidden text-xl backdrop-blur-lg font-medium ">
+                  {slides[currentIndex].first_name +
+                    " " +
+                    slides[currentIndex].last_name}
                 </span>
                 {/* <span className=" ml-5 text-lg overflow-hidden hidden lg:inline-flex">
                   {findage(slides[currentIndex].date_of_birth)}
                 </span> */}
-                <span className=" ml-28 text-sm overflow-hidden hidden 2xl:inline-flex">
-                  {findage(slides[currentIndex].date_of_birth) + " years"}
+                <span className=" ml-28 text-xl overflow-hidden hidden 2xl:inline-flex backdrop:blur-lg font-medium">
+                  {findage(slides[currentIndex].date_of_birth) + " Years"}
                 </span>
               </div>
             </div>
@@ -180,20 +181,20 @@ const Feed = () => {
             >
               {/* <div class="py-50">{slides[currentIndex].text}</div> */}
               <div className="mt-[5rem] w-full">
-                <p className=" text-red-300 text-lg lg:text-3xl mt-6 font-bold overflow-clip">
-                  {slides[currentIndex].name}
+                <p className=" text-black/90 text-lg lg:text-3xl mt-6 font-bold overflow-clip py-2">
+                  Rahul Gupta
                 </p>
-                <p className=" text-red-300 text-lg lg:text-3xl mt-6 overflow-clip ">
-                  {slides[currentIndex].age}
+                <p className=" text-black/80 text-lg lg:text-3xl mt-6 overflow-clip py-2 ">
+                  29
                 </p>
-                <p className=" text-red-300 text-lg lg:text-3xl mt-6 overflow-clip">
-                  {slides[currentIndex].gender}
+                <p className=" text-black/70 text-lg lg:text-3xl mt-6 overflow-clip py-2 ">
+                  They/Them
                 </p>
-                <p className=" text-red-300 text-lg lg:text-3xl mt-6 overflow-clip">
-                  {slides[currentIndex].preference}
+                <p className=" text-black/60 text-lg lg:text-3xl mt-6 overflow-clip py-2 ">
+                  Prefers Horny Men
                 </p>
-                <p className=" text-red-300 text-lg lg:text-3xl mt-6  hidden lg:block">
-                  {slides[currentIndex].bio}
+                <p className=" text-black/50 text-lg lg:text-2xl mt-6  hidden lg:block py-2 italic ">
+                  " {slides[currentIndex].bio} "
                 </p>
               </div>
             </div>
@@ -203,6 +204,9 @@ const Feed = () => {
           <div className="hidden group-hover:block absolute right-0.5 text-2xl rounded-full p-2 m-2 bg-black/20 text-white cursor-pointer">
             <BsChevronCompactRight onClick={nextSlide} size={30} />
           </div>
+        </div>
+        <div className="text-5xl text-red-200 ml-5 hover:cursor-pointer hover:scale-150 transition-all duration-150 ease-out hover:text-red-400 transform hover:rotate-45">
+          <MdSwipeRight />
         </div>
       </div>
     </>
