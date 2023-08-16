@@ -12,7 +12,7 @@ const AccountSettings = () => {
 				<div className="profile-tab-nav border-right">
 					<div className="p-4">
 						<div className="img-circle text-center mb-3">
-							<img src="https://images.pexels.com/photos/214574/pexels-photo-214574.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1ng" alt="Image" className="rounded-full h-40 w-40 shadow"/>
+							<img src="https://images.pexels.com/photos/214574/pexels-photo-214574.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1ng" alt="random pic" className="rounded-full h-40 w-40 shadow"/>
 						</div>
 						<h4 className="text-center">Kiran Acharya</h4>
 					</div>
