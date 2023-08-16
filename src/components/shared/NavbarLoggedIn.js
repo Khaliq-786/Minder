@@ -16,7 +16,7 @@ const NavbarLoggedIn = () => {
   let navigate = useNavigate();
   const context = useContext(profileContext);
   const { profile, getProfile } = context;
-  const imglink = profile ?profile.image : "";
+  const imglink = profile ? profile.image : "";
 
   function refreshPage() {
     let location = window.location.pathname;
