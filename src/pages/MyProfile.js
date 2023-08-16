@@ -32,7 +32,7 @@ const MyProfile = () => {
   return (
     <>
       <NavbarLoggedIn />
-      <div className="bg-site bg-no-repeat bg-cover overflow-hidden bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 py-20 px-3 w-full">
+      <div className="bg-site bg-no-repeat bg-cover overflow-hidden bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 px-3 w-full">
       {/* <NavbarLoggedIn /> */}
         <Banner/>
         <Nav/>

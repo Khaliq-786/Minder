@@ -1,65 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import one from "../../images/one.jpg";
-import two from "../../images/two.jpg";
-import three from "../../images/three.jpg";
-import four from "../../images/four.jpg";
-import five from "../../images/five.jpg";
 
 const Feed = () => {
   let navigate = useNavigate();
   const host = "http://localhost:5000";
   let slidesinitial = [
     {
-      image: one,
-      first_name: "Anna Kubov",
+      image: "",
+      first_name: "Name here",
       last_name: "",
-      age: "24",
-      dist: "10 miles away",
-      gender: "She/Her",
-      preference: "Prefers men",
-      bio: "A career orineted woman who loves swimming ,fucking and masturbation. ",
-    },
-    {
-      image: two,
-      first_name: "Alisha Ray",
-      last_name: "",
-      age: "24",
-      dist: "10 miles away",
-      gender: "She/Her",
-      preference: "Prefers men",
-      bio: "A career orineted woman who loves swimming ,fucking and masturbation. ",
-    },
-    {
-      image: three,
-      first_name: "Naomi Dane",
-      last_name: "",
-      age: "24",
-      dist: "10 miles away",
-      gender: "She/Her",
-      preference: "Prefers men",
-      bio: "A career orineted woman who loves swimming ,fucking and masturbation. ",
-    },
-    {
-      image: four,
-      first_name: "Leslie Grey",
-      last_name: "",
-      age: "24",
-      dist: "10 miles away",
-      gender: "She/Her",
-      preference: "Prefers men",
-      bio: "A career orineted woman who loves swimming ,fucking and masturbation. ",
-    },
-    {
-      image: five,
-      first_name: "Alishba Mallik",
-      last_name: "",
-      age: "24",
-      dist: "10 miles away",
-      gender: "She/Her",
-      preference: "Prefers men",
-      bio: "A career orineted woman who loves swimming ,fucking and masturbation. ",
+      age: "Age here",
+      dist: "Distance",
+      gender: "Gender here",
+      preference: "Preferance",
+      bio: "Bio",
     },
   ];
 
@@ -84,6 +39,21 @@ const Feed = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
+
+  const findage = (dob) => {
+    dob = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+
+    // Adjust the age based on the month and day
+    if (
+      today.getMonth() < dob.getMonth() ||
+      (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())
+    ) {
+      age--;
+    }
+    return age;
+  };
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
@@ -164,26 +134,28 @@ const Feed = () => {
             {/* Front side (Image) */}
             <div
               style={{
-                backgroundImage: (slides === [])?"":`url(${slides[currentIndex].image[0]})`,
+                backgroundImage:
+                  slides === [] ? "" : `url(${slides[currentIndex].image[0]})`,
               }}
               className={`${
                 isFlipped ? "hidden" : "block"
               } bg-cover bg-center bg-no-repeat w-full h-full rounded-2xl shadow-2xl shadow-black/100 text-center flex justify-center items-center `}
             >
               <div
+                onClick={() => {
+                  navigate(`/ViewProfile/${slides[currentIndex]._id}`);
+                }}
                 id=" short_bio"
-                className=" hidden group-hover:block absolute bottom-0 p-10 mx-auto text-white"
+                className=" hidden group-hover:block absolute bottom-0 p-10 mx-auto text-white cursor-pointer"
               >
                 <span className=" overflow-hidden text-lg">
-                  {slides[currentIndex].first_name +
-                    " " +
-                    slides[currentIndex].last_name}
+                  {slides[currentIndex].first_name}
                 </span>
-                <span className=" ml-5 text-lg overflow-hidden hidden lg:inline-flex">
-                  {slides[currentIndex].age}
-                </span>
+                {/* <span className=" ml-5 text-lg overflow-hidden hidden lg:inline-flex">
+                  {findage(slides[currentIndex].date_of_birth)}
+                </span> */}
                 <span className=" ml-28 text-sm overflow-hidden hidden 2xl:inline-flex">
-                  {slides[currentIndex].gender}
+                  {findage(slides[currentIndex].date_of_birth) + " years"}
                 </span>
               </div>
             </div>
