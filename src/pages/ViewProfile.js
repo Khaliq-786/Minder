@@ -3,6 +3,18 @@ import NavbarLoggedIn from "../components/shared/NavbarLoggedIn";
 import Footer from "../components/shared/Footer";
 import { useNavigate } from "react-router-dom";
 // import viewprofile from "../../images/viewprofile.jpg";
+import Img1 from "../images/img1.jpg";
+import Img2 from "../images/img2.jpg";
+import Img3 from "../images/img3.jpg";
+import Img4 from "../images/img4.jpg";
+import Img5 from "../images/img5.jpg";
+import Img6 from "../images/img6.jpg";
+import Img7 from "../images/img7.jpg";
+import Img8 from "../images/img8.jpg";
+import Img9 from "../images/img9.jpg";
+import Img10 from "../images/img10.jpg";
+
+const images = [Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8, Img9, Img10];
 
 const ViewProfile = () => {
   let navigate = useNavigate();
@@ -41,7 +53,7 @@ const ViewProfile = () => {
     <>
       <NavbarLoggedIn />
       {/* Profile section */}
-      <div className="h-screen bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 py-20 px-3 w-full ">
+      <div className=" bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 py-20 px-3 w-full ">
         <div className="max-w-md mx-auto md:max-w-lg shadow-black/100">
           <div className=" p-3 rounded-2xl text-center py-5 shadow-2xl shadow-black/100">
             <div className="flex justify-center">
@@ -53,11 +65,11 @@ const ViewProfile = () => {
             </div>
 
             <div className="text-center mb-2">
-              <h1 className="text-red-400  text-4xl mt-8 my-2 text">{userProfile.first_name + " " + userProfile.last_name}</h1>
+              <h1 className="text-red-400  text-4xl mt-8 my-2 text">
+                {userProfile.first_name + " " + userProfile.last_name}
+              </h1>
               <div className="px-5 text-sm">
-                <p className="text-center">
-                  {userProfile.bio}
-                </p>
+                <p className="text-center">{userProfile.bio}</p>
               </div>
               <div className="flex justify-between mt-3 px-4">
                 <div className="flex flex-col">
@@ -90,6 +102,18 @@ const ViewProfile = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div
+          id="gallery"
+          className="py-8 lg:py-20  flex text-center justify-center"
+        >
+          <h1 className="mt-10 text-3xl font-semibold">Image Gallery</h1>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 rounded-2xl my-2">
+          {images &&
+            images.map((imageUrl) => (
+              <img className="rounded-2xl" src={imageUrl} />
+            ))}
         </div>
       </div>
       {/* Profile section */}
