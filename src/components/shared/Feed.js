@@ -196,6 +196,18 @@ const Feed = () => {
                 <p className=" text-black/50 text-lg lg:text-2xl mt-6  hidden lg:block py-2 italic ">
                   " {slides[currentIndex].bio} "
                 </p>
+                <p>
+                  <button
+                    onClick={() => {
+                      navigate(`/ViewProfile/${slides[currentIndex]._id}`);
+                    }}
+                    className="hidden mt-8 w-1/2 right-32 lg:inline-flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 dark:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
+                  >
+                    <span className="relative w-full px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                      View Full Profile
+                    </span>
+                  </button>
+                </p>
               </div>
             </div>
           </div>
