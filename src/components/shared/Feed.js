@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { MdSwipeRight, MdSwipeLeft } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import profileContext from "../../context/profiles/profileContext";
 
 const Feed = () => {
+  const context = useContext(profileContext);
+  const { profile, getProfile } = context;
   let navigate = useNavigate();
   const host = "http://localhost:5000";
   let slidesinitial = [
     {
+      username: "",
       image: "",
       first_name: "Name here",
       last_name: "",
-      age: "Age here",
-      dist: "Distance",
+      date_of_birth: Date.now(),
       gender: "Gender here",
-      preference: "Preferance",
+      dating_prefrence: "Preferance",
       bio: "Bio",
     },
   ];
@@ -40,6 +43,39 @@ const Feed = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
+  const [matches, setMatches] = useState([]);
+  const findpronouns = (gender) => {
+    if (gender.toLowerCase() === "male") {
+      return "He/Him";
+    }
+    if (gender.toLowerCase() === "female") {
+      return "She/Her";
+    }
+    if (gender.toLowerCase() === "others") {
+      return "They/Them";
+    }
+  };
+
+  const findprefrence = (pref) => {
+    if (pref.toLowerCase() === "male") {
+      return "men";
+    }
+    if (pref.toLowerCase() === "female") {
+      return "women";
+    }
+    if (pref.toLowerCase() === "gay") {
+      return "gay";
+    }
+    if (pref.toLowerCase() === "lesbians") {
+      return "lesbians";
+    }
+    if (pref.toLowerCase() === "bisexual") {
+      return "bisexual";
+    }
+    if (pref.toLowerCase() === "queer") {
+      return "queer";
+    }
+  };
 
   const findage = (dob) => {
     dob = new Date(dob);
@@ -54,6 +90,51 @@ const Feed = () => {
       age--;
     }
     return age;
+  };
+
+  const leftSwipe = async () => {
+    //API call
+    const response = await fetch(`${host}/api/profile/swipe`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        userid: slides[currentIndex]._id,
+        matchUsername: slides[currentIndex].username,
+        isMatched: false,
+      }),
+    });
+    const json = await response.json();
+    console.log(json);
+    if (json.success) {
+    } else {
+    }
+  };
+
+  const rightSwipe = async () => {
+    //API call
+    const response = await fetch(`${host}/api/profile/swipe`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        userid: slides[currentIndex]._id,
+        matchUsername: slides[currentIndex].username,
+        isMatched: true,
+      }),
+    });
+    const json = await response.json();
+    console.log(json);
+    if (json.success) {
+    } else {
+    }
+  };
+  const userpofiledata = async () => {
+    
   };
 
   const prevSlide = () => {
@@ -73,10 +154,14 @@ const Feed = () => {
   const handleImageClick = () => {
     setIsFlipped(!isFlipped); // Toggle flip state on image click
   };
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
+      getProfile();
       getAllProfile();
-      // console.log(slides);
+      if (profile.mymatches) {
+        setMatches(profile.mymatches);
+      }
     } else {
       navigate("/Login");
     }
@@ -97,20 +182,27 @@ const Feed = () => {
           id="pop-up1"
           className="absolute left-0 border-red-200 border-double mr-60 w-1/2 h-4/5 rounded-2xl bg-gradient-to-br from-red-150 via-red-150 to-yellow-50 duration-500 shadow-2xl shadow-black/100 inline-grid items-top"
         >
-          <span className="w-full items-center text-center mt-6 text-black/90 text-4xl">
+          <span
+            id="current_matches"
+            className="items-center text-center mt-6 text-black/90 text-4xl"
+          >
             CURRENT MATCHES 💓
           </span>
-          <span className="cursor-pointer hover:scale-125 transition-all duration-150 ease-out w-full  items-center text-center mt-10 text-black/70 text-2xl">
-            Leslie Grey
-          </span>
-          <span className="cursor-pointer hover:scale-125 transition-all duration-150 ease-out w-full  items-center text-center mt-6 text-black/70 text-2xl">
-            Alisha Ray
-          </span>
-          <span className="cursor-pointer hover:scale-125 transition-all duration-150 ease-out w-full items-center text-center mt-6 text-black/70 text-2xl">
-            Anna Kubov
-          </span>
+          <div className="ml-5">
+            <img
+              src=""
+              className="h-10 rounded-full mx-3 inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out"
+              alt="Profile pic"
+            />
+            <span className="cursor-pointer ml-5 hover:scale-125 transition-all duration-150 ease-out w-full  items-center text-center mt-10 text-black/70 text-2xl">
+              Leslie Grey
+            </span>
+          </div>
         </div>
-        <div className="text-5xl text-red-200 mr-5 hover:cursor-pointer hover:scale-150 transition-all duration-150 ease-out hover:text-red-400 transform hover:-rotate-45">
+        <div
+          onClick={leftSwipe}
+          className="text-5xl text-red-200 mr-5 hover:cursor-pointer hover:scale-150 transition-all duration-150 ease-out hover:text-red-400 transform hover:-rotate-45"
+        >
           <MdSwipeLeft />
         </div>
 
@@ -182,16 +274,19 @@ const Feed = () => {
               {/* <div class="py-50">{slides[currentIndex].text}</div> */}
               <div className="mt-[5rem] w-full">
                 <p className=" text-black/90 text-lg lg:text-3xl mt-6 font-bold overflow-clip py-2">
-                  Rahul Gupta
+                  {slides[currentIndex].first_name +
+                    " " +
+                    slides[currentIndex].last_name}
                 </p>
                 <p className=" text-black/80 text-lg lg:text-3xl mt-6 overflow-clip py-2 ">
-                  29
+                  {findage(slides[currentIndex].date_of_birth) + " Years"}
                 </p>
                 <p className=" text-black/70 text-lg lg:text-3xl mt-6 overflow-clip py-2 ">
-                  They/Them
+                  {findpronouns(slides[currentIndex].gender)}
                 </p>
                 <p className=" text-black/60 text-lg lg:text-3xl mt-6 overflow-clip py-2 ">
-                  Prefers Horny Men
+                  {"Prefers " +
+                    findprefrence(slides[currentIndex].dating_prefrence)}
                 </p>
                 <p className=" text-black/50 text-lg lg:text-2xl mt-6  hidden lg:block py-2 italic ">
                   " {slides[currentIndex].bio} "
@@ -217,7 +312,10 @@ const Feed = () => {
             <BsChevronCompactRight onClick={nextSlide} size={30} />
           </div>
         </div>
-        <div className="text-5xl text-red-200 ml-5 hover:cursor-pointer hover:scale-150 transition-all duration-150 ease-out hover:text-red-400 transform hover:rotate-45">
+        <div
+          onClick={rightSwipe}
+          className="text-5xl text-red-200 ml-5 hover:cursor-pointer hover:scale-150 transition-all duration-150 ease-out hover:text-red-400 transform hover:rotate-45"
+        >
           <MdSwipeRight />
         </div>
       </div>

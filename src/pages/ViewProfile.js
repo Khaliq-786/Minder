@@ -2,19 +2,8 @@ import React, { useEffect, useState } from "react";
 import NavbarLoggedIn from "../components/shared/NavbarLoggedIn";
 import Footer from "../components/shared/Footer";
 import { useNavigate } from "react-router-dom";
-// import viewprofile from "../../images/viewprofile.jpg";
-import Img1 from "../images/img1.jpg";
-import Img2 from "../images/img2.jpg";
-import Img3 from "../images/img3.jpg";
-import Img4 from "../images/img4.jpg";
-import Img5 from "../images/img5.jpg";
-import Img6 from "../images/img6.jpg";
-import Img7 from "../images/img7.jpg";
-import Img8 from "../images/img8.jpg";
-import Img9 from "../images/img9.jpg";
-import Img10 from "../images/img10.jpg";
 
-const images = [Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8, Img9, Img10];
+let images = [];
 
 const ViewProfile = () => {
   let navigate = useNavigate();
@@ -44,6 +33,8 @@ const ViewProfile = () => {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       getUserProfile();
+      if (userProfile);
+      images = userProfile.image;
     } else {
       navigate("/");
     }
@@ -112,7 +103,7 @@ const ViewProfile = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 rounded-2xl my-2">
           {images &&
             images.map((imageUrl) => (
-              <img className="rounded-2xl" src={imageUrl} />
+              <img className="rounded-2xl" alt="User posts" src={imageUrl} />
             ))}
         </div>
       </div>
