@@ -237,7 +237,7 @@ const Feed = () => {
                 </span>
               </div>
             ))}
-          {MatchedProfiles.length == 0 && (
+          {MatchedProfiles.length === 0 && (
             <div className="ml-5">
               <div className="w-full items-center text-center  text-black/40 text-xl mb-20">You don't have any matches currently😕</div>
             </div>
