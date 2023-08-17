@@ -9,6 +9,10 @@ const Feed = () => {
   const { profile, getProfile } = context;
   let navigate = useNavigate();
   const host = "http://localhost:5000";
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [matches, setMatches] = useState([]);
+  const [MatchedProfiles, setMatchedProfiles] = useState([]);
   let slidesinitial = [
     {
       username: "",
@@ -21,8 +25,25 @@ const Feed = () => {
       bio: "Bio",
     },
   ];
-
   const [slides, setSlides] = useState(slidesinitial);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      getProfile();
+      if (profile.mymatches) {
+        setMatches(profile.mymatches);
+        // if (matches.length > 0) {
+        //   userpofiledata();
+        // }
+        // console.log(MatchedProfiles)
+      }
+      getAllProfile();
+    } else {
+      navigate("/Login");
+    }
+    // eslint-disable-next-line
+  }, [slides]);
+
   //Get All profile data except your own
   const getAllProfile = async () => {
     //API call
@@ -41,9 +62,6 @@ const Feed = () => {
     }
   };
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [matches, setMatches] = useState([]);
   const findpronouns = (gender) => {
     if (gender.toLowerCase() === "male") {
       return "He/Him";
@@ -107,7 +125,6 @@ const Feed = () => {
       }),
     });
     const json = await response.json();
-    console.log(json);
     if (json.success) {
     } else {
     }
@@ -128,13 +145,45 @@ const Feed = () => {
       }),
     });
     const json = await response.json();
-    console.log(json);
     if (json.success) {
     } else {
     }
   };
+
   const userpofiledata = async () => {
-    
+    const updatedMatchedProfiles = await Promise.all(
+      matches.map(async (matchid) => {
+        try {
+          const response = await fetch(
+            `${host}/api/profile/getprofile/${matchid}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                "auth-token": localStorage.getItem("token"),
+              },
+            }
+          );
+          const json = await response.json();
+          if (json.success) {
+            return { index: matchid, profile: profile };
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.error(error.message);
+          return null;
+        }
+      })
+    );
+
+    // Filter out null values (API errors)
+    const filteredMatchedProfiles = updatedMatchedProfiles.filter(
+      (profile) => profile !== null
+    );
+
+    // Update the state with the retrieved match profile data
+    setMatchedProfiles(filteredMatchedProfiles);
   };
 
   const prevSlide = () => {
@@ -154,19 +203,6 @@ const Feed = () => {
   const handleImageClick = () => {
     setIsFlipped(!isFlipped); // Toggle flip state on image click
   };
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      getProfile();
-      getAllProfile();
-      if (profile.mymatches) {
-        setMatches(profile.mymatches);
-      }
-    } else {
-      navigate("/Login");
-    }
-    // eslint-disable-next-line
-  }, [slides]);
   return (
     <>
       <div className="flex flex-col lg:flex-row justify-center items-center h-full relative w-full">
@@ -188,16 +224,24 @@ const Feed = () => {
           >
             CURRENT MATCHES 💓
           </span>
-          <div className="ml-5">
-            <img
-              src=""
-              className="h-10 rounded-full mx-3 inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out"
-              alt="Profile pic"
-            />
-            <span className="cursor-pointer ml-5 hover:scale-125 transition-all duration-150 ease-out w-full  items-center text-center mt-10 text-black/70 text-2xl">
-              Leslie Grey
-            </span>
-          </div>
+          {MatchedProfiles.length > 0 &&
+            MatchedProfiles.map((index, profile) => (
+              <div key={index} className="ml-5">
+                <img
+                  src={profile.image}
+                  className="h-10 rounded-full mx-3 inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out"
+                  alt="Profile pic"
+                />
+                <span className="cursor-pointer ml-5 hover:scale-125 transition-all duration-150 ease-out w-full  items-center text-center mt-10 text-black/70 text-2xl">
+                  {profile.first_name + " " + profile.last_name}
+                </span>
+              </div>
+            ))}
+          {MatchedProfiles.length == 0 && (
+            <div className="ml-5">
+              <div className="w-full items-center text-center  text-black/40 text-xl mb-20">You don't have any matches currently😕</div>
+            </div>
+          )}
         </div>
         <div
           onClick={leftSwipe}
