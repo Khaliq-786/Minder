@@ -43,6 +43,11 @@ const NavbarLoggedIn = () => {
     // eslint-disable-next-line
   }, []);
 
+  // useEffect(() => {
+  //   if (chats.length > 0) console.log(chats);
+  //   // eslint-disable-next-line
+  // }, [chats]);
+
   const fetchchats = async () => {
     //API Call
     const response = await fetch(`${host}/api/chat/fetchchats`, {
@@ -170,15 +175,16 @@ const NavbarLoggedIn = () => {
           >
             <div className="flex flex-col divide-y-2 divide-black">
               <div className="py-2 cursor-pointer">
-                {chats.length === 0 ? (
+                {(chats.length === 0) ? (
                   <div className="font-medium">No recent chats</div>
                 ) : (
                   <div>
                     {chats.map((chat) => {
+                      console.log(chat)
                       return (
-                        <div key={chat.otherprofile._id}>
-                          <div className="font-medium">{chat.otherprofile.first_name}</div>
-                          <div className="font-light">{chat.message}</div>
+                        <div key={chat}>
+                          <div className="font-medium">{}</div>
+                          <div className="font-light">{}</div>
                         </div>
                       );
                     })}
