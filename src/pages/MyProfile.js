@@ -20,7 +20,7 @@ const MyProfile = () => {
       navigate("/Login");
     }
     // eslint-disable-next-line
-  }, [profile]);
+  }, []);
 
   if (!profile) {
     // Loading state while profile data is being fetched

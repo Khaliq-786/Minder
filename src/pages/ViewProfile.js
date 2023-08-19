@@ -1,18 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NavbarLoggedIn from "../components/shared/NavbarLoggedIn";
 import Footer from "../components/shared/Footer";
 import { useNavigate } from "react-router-dom";
-
-let images = [];
+import profileContext from "../context/profiles/profileContext";
 
 const ViewProfile = () => {
+  const [canmessage, setCanmessage] = useState(false);
+  const context = useContext(profileContext);
+  const { profile, getProfile } = context;
+  const [images, setImages] = useState([]);
   let navigate = useNavigate();
   let id = window.location.pathname.substring(13);
-
   const host = "http://localhost:5000";
   const profileinitial = {};
-
   const [userProfile, setUserProfile] = useState(profileinitial);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      getProfile();
+      getUserProfile();
+    } else {
+      navigate("/");
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (profile && userProfile) {
+      if (profile.mymatches) {
+        let x = Array.isArray(profile.mymatches)
+          ? profile.mymatches
+          : [profile.mymatches];
+        let n = x.length;
+        for (let i = 0; i < n; i++) {
+          if (x[i] === userProfile._id) {
+            setCanmessage(true);
+          }
+        }
+      }
+    }
+  }, [profile, userProfile]);
+
+  useEffect(() => {
+    // Update the images when userProfile changes
+    if (userProfile.image) {
+      setImages(userProfile.image);
+    }
+  }, [userProfile]);
+
   const getUserProfile = async () => {
     //API call
     const response = await fetch(`${host}/api/profile/getprofile/${id}`, {
@@ -23,23 +58,11 @@ const ViewProfile = () => {
       },
     });
     const json = await response.json();
-    // console.log(json);
     if (json.success) {
       setUserProfile(json.profile);
     } else {
     }
   };
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      getUserProfile();
-      if (userProfile);
-      images = userProfile.image;
-    } else {
-      navigate("/");
-    }
-    // eslint-disable-next-line
-  }, []);
   return (
     <>
       <NavbarLoggedIn />
@@ -50,7 +73,11 @@ const ViewProfile = () => {
             <div className="flex justify-center">
               <img
                 className="rounded-full object-contain shadow-xl shadow-black/100 w-80 h-80"
-                src={userProfile.image}
+                src={
+                  Array.isArray(userProfile.image)
+                    ? userProfile.image[0]
+                    : userProfile.image
+                }
                 alt=""
               />
             </div>
@@ -62,34 +89,39 @@ const ViewProfile = () => {
               <div className="px-5 text-sm">
                 <p className="text-center">{userProfile.bio}</p>
               </div>
-              <div className="flex justify-between mt-3 px-4">
+              <div className="flex justify-around mt-3 px-4">
                 <div className="flex flex-col">
-                  <span className="font-bold text-2xl text-red-500">97</span>
-                  <span className="text-sm text-red-400">Followers</span>
-                </div>
-
-                <div className="flex flex-col">
-                  <span className="font-bold text-2xl text-red-500">197</span>
+                  <span className="font-bold text-2xl text-red-500">
+                    {Array.isArray(userProfile.image)
+                      ? userProfile.image.length
+                      : 1}
+                  </span>
                   <span className="text-sm text-red-400">Posts</span>
                 </div>
 
                 <div className="flex flex-col">
-                  <span className="font-bold text-2xl text-red-500">57</span>
-                  <span className="text-sm text-red-400">Following</span>
+                  <span className="font-bold text-2xl text-red-500">
+                    {Array.isArray(userProfile.mymatches)
+                      ? userProfile.mymatches.length
+                      : 1}
+                  </span>
+                  <span className="text-sm text-red-400">Matches</span>
                 </div>
               </div>
 
               <div className="w-full  flex-row px-4 mt-4">
                 <button className="w-2/5 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
                   <span className="w-full relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                    Follow
+                    Like 💓
                   </span>
                 </button>
-                <button className="w-2/5 relative inline-flex items-center justify-center p-0.5 mb-2 ml-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
-                  <span className="w-full relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                    Message
-                  </span>
-                </button>
+                {canmessage && (
+                  <button className="w-2/5 relative inline-flex items-center justify-center p-0.5 mb-2 ml-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
+                    <span className="w-full relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                      Message
+                    </span>
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -103,7 +135,12 @@ const ViewProfile = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 rounded-2xl my-2">
           {images &&
             images.map((imageUrl) => (
-              <img className="rounded-2xl" alt="User posts" src={imageUrl} />
+              <img
+                key={imageUrl}
+                className="rounded-2xl"
+                alt="User posts"
+                src={imageUrl}
+              />
             ))}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import profileContext from "../../context/profiles/profileContext";
 import {
@@ -13,28 +13,88 @@ import { HomeIcon } from "@heroicons/react/solid";
 import { useNavigate } from "react-router-dom";
 
 const NavbarLoggedIn = () => {
-  let navigate = useNavigate();
+  const [chats, setChats] = useState([]);
+  const [Search, setSearch] = useState("");
+  const [profiles, setProfiles] = useState([]);
   const context = useContext(profileContext);
   const { profile, getProfile } = context;
-  const imglink = profile ? profile.image : "";
+  let navigate = useNavigate();
+  const imglink = profile
+    ? Array.isArray(profile.image)
+      ? profile.image
+      : [profile.image]
+    : "";
+  const host = "http://localhost:5000";
 
-  function refreshPage() {
-    let location = window.location.pathname;
-    if (location === "/") window.location.reload(false);
-  }
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      getProfile();
-    } else {
-      navigate("/Login");
-    }
-    // eslint-disable-next-line
-  }, []);
   useEffect(() => {
     if (profile === null || profile === undefined) {
       navigate("/CreateProfile");
     }
   }, [navigate, profile]);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      getProfile();
+      getAlltheProfile();
+      fetchchats();
+    } else {
+      navigate("/Login");
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  const fetchchats = async () => {
+    //API Call
+    const response = await fetch(`${host}/api/chat/fetchchats`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    const json = await response.json();
+    if (json.success) {
+      setChats(json.finalres);
+    } else {
+    }
+  };
+
+  const handleSearch = () => {
+    let n = profiles.length;
+    for (let i = 0; i < n; i++) {
+      if (profiles[i].username === Search) {
+        navigate(`/ViewProfile/${profiles[i]._id}`);
+        window.location.reload(false);
+        return;
+      }
+    }
+    console.log("No such user found !");
+  };
+
+  //Get All profile data except your own
+  const getAlltheProfile = async () => {
+    //API call
+    const response = await fetch(`${host}/api/profile/getalltheprofile`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    const json = await response.json();
+    // console.log(json);
+    if (json.success) {
+      setProfiles(json.profiles);
+    } else {
+    }
+  };
+  function refreshPage() {
+    let location = window.location.pathname;
+    if (location === "/") window.location.reload(false);
+    else {
+      navigate("/");
+    }
+  }
 
   return (
     <>
@@ -58,19 +118,34 @@ const NavbarLoggedIn = () => {
                 <SearchIcon className="h-5 w-5 text-gray-500" />
               </div>
               <input
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSearch();
+                  }
+                }}
+                id="searchbutton"
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
                 className="bg-red-50 block w-full pl-10 sm:text-sm
           border-gray-300 focus:ring-black focus:border-black rounded-md px-12 py-2"
                 type="text"
-                placeholder="Search"
+                placeholder="Search using username"
               />
             </div>
           </div>
 
           {/* {Right} */}
           <div className="flex place-items-center justify-end space-x-4 cursor-pointer">
-            <HomeIcon className="navBtn " />
+            <HomeIcon onClick={refreshPage} className="navBtn " />
             <MenuIcon className="h-6 md:hidden cursor-pointer navBtn red" />
-            <PaperAirplaneIcon className="navBtn" />
+            <PaperAirplaneIcon
+              onClick={() => {
+                let chatdropdown = document.getElementById("chatdropdown");
+                chatdropdown.classList.toggle("hidden");
+              }}
+              className="navBtn"
+            />
             <HeartIcon className="navBtn" />
 
             <img
@@ -79,7 +154,7 @@ const NavbarLoggedIn = () => {
                 let dropdown = document.getElementById("dropdown");
                 dropdown.classList.toggle("hidden");
               }}
-              src={imglink}
+              src={imglink[0]}
               className="h-10 rounded-full mx-3 inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out"
               alt="Profile pic"
             />
@@ -87,6 +162,33 @@ const NavbarLoggedIn = () => {
               {profile.username}
             </div>
           </div>
+
+          {/* Recent chats section */}
+          <div
+            id="chatdropdown"
+            className="absolute hidden right-72 top-16 rounded-md bg-white p-4 px-8 mt-0.5"
+          >
+            <div className="flex flex-col divide-y-2 divide-black">
+              <div className="py-2 cursor-pointer">
+                {chats.length === 0 ? (
+                  <div className="font-medium">No recent chats</div>
+                ) : (
+                  <div>
+                    {chats.map((chat) => {
+                      return (
+                        <div key={chat.otherprofile._id}>
+                          <div className="font-medium">{chat.otherprofile.first_name}</div>
+                          <div className="font-light">{chat.message}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          {/* Recent chats section ends */}
+
           <div
             id="dropdown"
             className="absolute hidden right-48 top-16 bg-gray-200 p-4 px-8 mt-1"

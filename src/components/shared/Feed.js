@@ -5,14 +5,20 @@ import { useNavigate } from "react-router-dom";
 import profileContext from "../../context/profiles/profileContext";
 
 const Feed = () => {
+  //To use naviagtion
+  let navigate = useNavigate();
+  // For getting own profile
   const context = useContext(profileContext);
   const { profile, getProfile } = context;
-  let navigate = useNavigate();
+  //This is the address for our backend server
   const host = "http://localhost:5000";
+  //States to change and flip the slides
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
+  //States to keep track of the matches and matched profiles
   const [matches, setMatches] = useState([]);
   const [MatchedProfiles, setMatchedProfiles] = useState([]);
+  //Temporary data which appears before component loads
   let slidesinitial = [
     {
       username: "",
@@ -30,19 +36,63 @@ const Feed = () => {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       getProfile();
-      if (profile.mymatches) {
-        setMatches(profile.mymatches);
-        // if (matches.length > 0) {
-        //   userpofiledata();
-        // }
-        // console.log(MatchedProfiles)
-      }
       getAllProfile();
     } else {
       navigate("/Login");
     }
     // eslint-disable-next-line
-  }, [slides]);
+  }, []);
+
+  useEffect(() => {
+    if (profile) {
+      setMatches(profile.mymatches);
+    }
+  }, [profile]);
+
+  useEffect(() => {
+    if (matches && matches !== []) {
+      userpofiledata();
+    }
+    // eslint-disable-next-line
+  }, [matches]);
+
+  const userpofiledata = async () => {
+    if (matches) {
+      const updatedMatchedProfiles = await Promise.all(
+        matches.map(async (matchid) => {
+          try {
+            const response = await fetch(
+              `${host}/api/profile/getprofile/${matchid}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  "auth-token": localStorage.getItem("token"),
+                },
+              }
+            );
+            const json = await response.json();
+            if (json.success) {
+              return { index: matchid, profile: json.profile };
+            } else {
+              return null;
+            }
+          } catch (error) {
+            console.error(error.message);
+            return null;
+          }
+        })
+      );
+
+      // Filter out null values (API errors)
+      const filteredMatchedProfiles = updatedMatchedProfiles.filter(
+        (profile) => profile !== null
+      );
+
+      // Update the state with the retrieved match profile data
+      setMatchedProfiles(filteredMatchedProfiles);
+    }
+  };
 
   //Get All profile data except your own
   const getAllProfile = async () => {
@@ -55,11 +105,77 @@ const Feed = () => {
       },
     });
     const json = await response.json();
-    // console.log(json);
     if (json.success) {
       setSlides(json.profiles);
     } else {
     }
+  };
+
+  const leftSwipe = async () => {
+    //API call
+    const response = await fetch(`${host}/api/profile/swipe`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        userid: slides[currentIndex]._id,
+        matchUsername: slides[currentIndex].username,
+        isMatched: false,
+      }),
+    });
+    const json = await response.json();
+    console.log(json);
+    if (json.success) {
+      getProfile();
+      getAllProfile();
+      if (profile.mymatches) {
+        userpofiledata();
+      }
+    } else {
+    }
+  };
+
+  const rightSwipe = async () => {
+    //API call
+    const response = await fetch(`${host}/api/profile/swipe`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        userid: slides[currentIndex]._id,
+        matchUsername: slides[currentIndex].username,
+        isMatched: true,
+      }),
+    });
+    const json = await response.json();
+    console.log(json);
+    if (json.success) {
+      getProfile();
+      getAllProfile();
+      if (profile.mymatches) {
+        userpofiledata();
+      }
+    } else {
+    }
+  };
+
+  const findage = (dob) => {
+    dob = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+
+    // Adjust the age based on the month and day
+    if (
+      today.getMonth() < dob.getMonth() ||
+      (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())
+    ) {
+      age--;
+    }
+    return age;
   };
 
   const findpronouns = (gender) => {
@@ -93,97 +209,6 @@ const Feed = () => {
     if (pref.toLowerCase() === "queer") {
       return "queer";
     }
-  };
-
-  const findage = (dob) => {
-    dob = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - dob.getFullYear();
-
-    // Adjust the age based on the month and day
-    if (
-      today.getMonth() < dob.getMonth() ||
-      (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())
-    ) {
-      age--;
-    }
-    return age;
-  };
-
-  const leftSwipe = async () => {
-    //API call
-    const response = await fetch(`${host}/api/profile/swipe`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        userid: slides[currentIndex]._id,
-        matchUsername: slides[currentIndex].username,
-        isMatched: false,
-      }),
-    });
-    const json = await response.json();
-    if (json.success) {
-    } else {
-    }
-  };
-
-  const rightSwipe = async () => {
-    //API call
-    const response = await fetch(`${host}/api/profile/swipe`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        userid: slides[currentIndex]._id,
-        matchUsername: slides[currentIndex].username,
-        isMatched: true,
-      }),
-    });
-    const json = await response.json();
-    if (json.success) {
-    } else {
-    }
-  };
-
-  const userpofiledata = async () => {
-    const updatedMatchedProfiles = await Promise.all(
-      matches.map(async (matchid) => {
-        try {
-          const response = await fetch(
-            `${host}/api/profile/getprofile/${matchid}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                "auth-token": localStorage.getItem("token"),
-              },
-            }
-          );
-          const json = await response.json();
-          if (json.success) {
-            return { index: matchid, profile: profile };
-          } else {
-            return null;
-          }
-        } catch (error) {
-          console.error(error.message);
-          return null;
-        }
-      })
-    );
-
-    // Filter out null values (API errors)
-    const filteredMatchedProfiles = updatedMatchedProfiles.filter(
-      (profile) => profile !== null
-    );
-
-    // Update the state with the retrieved match profile data
-    setMatchedProfiles(filteredMatchedProfiles);
   };
 
   const prevSlide = () => {
@@ -225,21 +250,37 @@ const Feed = () => {
             CURRENT MATCHES 💓
           </span>
           {MatchedProfiles.length > 0 &&
-            MatchedProfiles.map((index, profile) => (
-              <div key={index} className="ml-5">
-                <img
-                  src={profile.image}
-                  className="h-10 rounded-full mx-3 inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out"
-                  alt="Profile pic"
-                />
-                <span className="cursor-pointer ml-5 hover:scale-125 transition-all duration-150 ease-out w-full  items-center text-center mt-10 text-black/70 text-2xl">
-                  {profile.first_name + " " + profile.last_name}
-                </span>
-              </div>
-            ))}
+            MatchedProfiles.map((index) => {
+              const imageArray = index.profile
+                ? Array.isArray(index.profile.image)
+                  ? index.profile.image
+                  : [index.profile.image]
+                : [];
+
+              return (
+                <div
+                  onClick={() => {
+                    navigate(`/ViewProfile/${index.profile._id}`);
+                  }}
+                  key={index.index}
+                  className="ml-5"
+                >
+                  <img
+                    src={imageArray[0]}
+                    className="h-10 rounded-full mx-3 inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out"
+                    alt="Profile pic"
+                  />
+                  <span className="cursor-pointer ml-5 hover:scale-125 transition-all duration-150 ease-out w-full  items-center text-center mt-10 text-black/70 text-2xl">
+                    {index.profile.first_name + " " + index.profile.last_name}
+                  </span>
+                </div>
+              );
+            })}
           {MatchedProfiles.length === 0 && (
             <div className="ml-5">
-              <div className="w-full items-center text-center  text-black/40 text-xl mb-20">You don't have any matches currently😕</div>
+              <div className="w-full items-center text-center  text-black/40 text-xl mb-20">
+                You don't have any matches currently😕
+              </div>
             </div>
           )}
         </div>

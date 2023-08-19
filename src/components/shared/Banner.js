@@ -6,7 +6,11 @@ const Banner = () => {
   let navigate = useNavigate();
   const context = useContext(profileContext);
   const { profile, getProfile } = context;
-  const imglink = profile ? profile.image : "";
+  const imglink = profile
+    ? Array.isArray(profile.image)
+      ? profile.image
+      : [profile.image]
+    : "";
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -20,7 +24,7 @@ const Banner = () => {
     if (profile === null || profile === undefined) {
       navigate("/CreateProfile");
     }
-  }, [navigate, profile]);
+  }, []);
   return (
     <div id="home" className="py-8 lg:py-24 lg:h-screen flex items-center">
       <div className="h-screen bg-gradient-to-br from-red-50 via-red-100 to-yellow-100 py-20 px-3 w-full ">
@@ -29,7 +33,7 @@ const Banner = () => {
             <div className="flex justify-center">
               <img
                 className="rounded-full object-contain shadow-xl shadow-black/100 w-80 h-80"
-                src={imglink}
+                src={imglink[0]}
                 alt=""
               />
             </div>
@@ -39,24 +43,23 @@ const Banner = () => {
                 {profile.first_name + " " + profile.last_name}{" "}
               </h1>
               <div className="px-5 text-sm">
-                <p className="py-5 text-center">
-                  {profile.bio}
-                </p>
+                <p className="py-5 text-center">{profile.bio}</p>
               </div>
-              <div className="flex justify-between mt-3 px-4">
+              <div className="flex justify-around mt-3 px-4">
                 <div className="flex flex-col">
-                  <span className="font-bold text-2xl text-red-500">97</span>
-                  <span className="text-sm text-red-400">Followers</span>
-                </div>
-
-                <div className="flex flex-col">
-                  <span className="font-bold text-2xl text-red-500">197</span>
+                  <span className="font-bold text-2xl text-red-500">
+                    {Array.isArray(profile.image) ? profile.image.length : 1}
+                  </span>
                   <span className="text-sm text-red-400">Posts</span>
                 </div>
 
                 <div className="flex flex-col">
-                  <span className="font-bold text-2xl text-red-500">57</span>
-                  <span className="text-sm text-red-400">Following</span>
+                  <span className="font-bold text-2xl text-red-500">
+                    {Array.isArray(profile.mymatches)
+                      ? profile.mymatches.length
+                      : 1}
+                  </span>
+                  <span className="text-sm text-red-400">Matches</span>
                 </div>
               </div>
 
