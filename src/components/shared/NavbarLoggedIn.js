@@ -164,7 +164,7 @@ const NavbarLoggedIn = () => {
           </div>
 
           {/* Recent chats section */}
-          <div
+          {/* <div
             id="chatdropdown"
             className="absolute hidden right-72 top-16 rounded-md bg-white p-4 px-8 mt-0.5"
           >
@@ -186,7 +186,7 @@ const NavbarLoggedIn = () => {
                 )}
               </div>
             </div>
-          </div>
+          </div> */}
           {/* Recent chats section ends */}
 
           <div
