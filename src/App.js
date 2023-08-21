@@ -13,6 +13,7 @@ import ProfileState from "./context/profiles/ProfileState";
 import Home from "./pages/Home";
 import MyProfile from "./pages/MyProfile";
 import ViewProfile from "./pages/ViewProfile";
+import Chat from "./pages/Chat";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route exact path="/Home" element={<Home />} />
             <Route exact path="/MyProfile" element={<MyProfile />} />
             <Route exact path="/ViewProfile/:id" element={<ViewProfile />} />
+            <Route exact path="/Chat" element={<Chat />} />
           </Routes>
         </Router>
       </ProfileState>
